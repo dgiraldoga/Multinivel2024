@@ -3,6 +3,8 @@ package co.banco.mio.bancomio.mapper;
 
 import co.banco.mio.bancomio.domain.User;
 import co.banco.mio.bancomio.dto.UserDTO;
+import co.banco.mio.bancomio.dto.request.CreateUserRequest;
+import co.banco.mio.bancomio.utils.Constantes;
 
 import java.util.List;
 
@@ -36,5 +38,15 @@ public class UserMapper {
 
     public static  List<User> dTOToDomainList (List<UserDTO> usersDTO){
         return  usersDTO.stream().map(UserMapper::dTOToDomain).toList();
+    }
+
+    public static User createUserRequestToDomain (CreateUserRequest userRequest){
+        return User.builder()
+                .name(userRequest.getName())
+                .lastName(userRequest.getLastName())
+                .city(userRequest.getCity())
+                .status(Constantes.ESTADO_ACTIVO)
+                .userRegDate(userRequest.getUserRegDate())
+                .build();
     }
 }
