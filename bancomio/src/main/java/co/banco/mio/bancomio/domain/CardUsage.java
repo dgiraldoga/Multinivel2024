@@ -30,19 +30,19 @@ public class CardUsage {
 	
 	@ManyToOne
 	@JoinColumn(name="serial_card")
-	private Integer serialCard;
+	private Card cardId;
 	
 	@ManyToOne
 	@JoinColumn(name="ld_id")
-	private Integer LdId;
+	private LineDetail lineDetailId;
 	
 	@ManyToOne
 	@JoinColumn(name="user_id")
-	private Integer userId;
+	private User userId;
 	
 	@ManyToOne
 	@JoinColumn(name="vl_id")
-	private Integer vlId;
+	private Validator validatorId;
 	
 	@Column(name="cu_datetime")
 	private Date cuDateTime;

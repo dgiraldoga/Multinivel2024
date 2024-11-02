@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="aplications")
-public class Aplication {
+public class Application {
 	
 	@Id
 	@Column(nullable=false)

@@ -39,6 +39,6 @@ public class Validator {
 	
 	@ManyToOne
 	@JoinColumn(name="tp_id")
-	private int tpId;
+	private TransportProvider transportProvider;
 
 }

@@ -36,6 +36,6 @@ public class Card {
 	
 	@ManyToOne
 	@JoinColumn(name="app_id")
-	private int appId;
+	private Application application;
 
 }
