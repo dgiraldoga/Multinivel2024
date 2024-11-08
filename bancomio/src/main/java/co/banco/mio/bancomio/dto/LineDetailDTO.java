@@ -14,7 +14,6 @@ public class LineDetailDTO {
 	
     private Integer ldId;
 	private String ldDsc;
-	private String ldStatus;
-	private Date ldRegDate;
+	private Character ldStatus;
 
 }

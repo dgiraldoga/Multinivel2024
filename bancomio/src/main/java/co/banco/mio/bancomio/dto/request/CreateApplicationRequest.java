@@ -1,18 +1,17 @@
-package co.banco.mio.bancomio.dto;
+package co.banco.mio.bancomio.dto.request;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ApplicationDTO {
-	
+public class CreateApplicationRequest {
     private Integer appId;
-	private String appDsc;
-	private Character appStatus;
-
+    private String appDescription;
+    private Character status;
 }

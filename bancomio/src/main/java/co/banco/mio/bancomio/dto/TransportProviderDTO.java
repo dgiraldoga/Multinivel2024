@@ -14,7 +14,6 @@ public class TransportProviderDTO {
 	
     private Integer tpId;
 	private String tpDesc;
-	private String tpStatus;
-	private Date tpRepDate;
+	private Character tpStatus;
 
 }

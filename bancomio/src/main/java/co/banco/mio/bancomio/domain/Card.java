@@ -1,15 +1,7 @@
 package co.banco.mio.bancomio.domain;
+import java.time.LocalDateTime;
 
-import java.util.Date;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,18 +16,18 @@ import lombok.NoArgsConstructor;
 public class Card {
 	
 	@Id
-	@Column(nullable=false)
+	@Column(name = "serial_card", nullable=false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer serialCard;
 	
-	@Column(name="card_status")
-	private String cardSatus;
+	@Column(name="card_status", length = 1, nullable = false)
+	private Character cardSatus;
 	
 	@Column(name="card_regdate")
-	private Date cardRegDate;
+	private LocalDateTime cardRegDate;
 	
-	@ManyToOne
-	@JoinColumn(name="app_id")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="app_id", referencedColumnName = "appid")
 	private Application application;
 
 }

@@ -16,6 +16,6 @@ public class UserDTO {
 	private String name;
 	private String lastName;
 	private String city;
-	private String status;
-	private Date userRegDate;
+	private Character status;
+
 }

@@ -11,15 +11,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CardUsageDTO {
-	
-    private Integer id;
+
 	private Integer cardId;
 	private Integer lineDetailId;
 	private Integer userId;
 	private Integer validatorId;
 	private Date cuDateTime;
-	private int fareValue;
-	private int typeUsage;
-	private int tsn;
+	private Integer fareValue;
+	private Integer typeUsage;
+	private Integer tsn;
 
 }

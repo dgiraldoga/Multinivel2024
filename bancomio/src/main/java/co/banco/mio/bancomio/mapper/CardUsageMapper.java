@@ -9,7 +9,6 @@ public class CardUsageMapper {
 
     public static CardUsageDTO domainToDTO (CardUsage cardUsage){
         return CardUsageDTO.builder()
-                .id(cardUsage.getId())
                 .cardId(cardUsage.getCardId() == null?null: cardUsage.getCardId().getSerialCard())
                 .lineDetailId(cardUsage.getLineDetailId() == null?null: cardUsage.getLineDetailId().getLdId())
                 .userId(cardUsage.getUserId() == null?null: cardUsage.getUserId().getUserId())

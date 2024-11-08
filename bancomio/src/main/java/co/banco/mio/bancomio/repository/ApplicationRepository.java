@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import co.banco.mio.bancomio.domain.Application;
 
 @Repository
-public interface ApplicationRepository extends JpaRepository<Application, Integer> {
+public interface ApplicationRepository extends JpaRepository<Application, Integer>{
 
 }

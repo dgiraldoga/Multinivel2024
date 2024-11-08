@@ -13,8 +13,7 @@ import lombok.NoArgsConstructor;
 public class CardDTO {
 	
     private Integer serialCard;
-	private String cardSatus;
-	private Date cardRegDate;
-	private Integer aplicationId;
+	private Character cardStatus;
+	private Integer applicationId;
 
 }

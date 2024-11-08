@@ -2,34 +2,44 @@ package co.banco.mio.bancomio.mapper;
 
 import co.banco.mio.bancomio.domain.TransportProvider;
 import co.banco.mio.bancomio.dto.TransportProviderDTO;
+import co.banco.mio.bancomio.dto.request.CreateTransportProviderRequest;
+import co.banco.mio.bancomio.utils.Constantes;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class TransportProviderMapper {
 
-    public static TransportProviderDTO domainToDTO (TransportProvider transportProvider){
+    public static TransportProviderDTO domainToDTO(TransportProvider transportProvider) {
         return TransportProviderDTO.builder()
                 .tpId(transportProvider.getTpId())
                 .tpDesc(transportProvider.getTpDesc())
                 .tpStatus(transportProvider.getTpStatus())
-                .tpRepDate(transportProvider.getTpRepDate())
                 .build();
     }
 
-    public static TransportProvider dTOToDomain (TransportProviderDTO transportProviderDTO){
+    public static TransportProvider dTOToDomain(TransportProviderDTO transportProviderDTO) {
         return TransportProvider.builder()
                 .tpId(transportProviderDTO.getTpId())
                 .tpDesc(transportProviderDTO.getTpDesc())
                 .tpStatus(transportProviderDTO.getTpStatus())
-                .tpRepDate(transportProviderDTO.getTpRepDate())
+                .tpRepDate(LocalDateTime.now())
                 .build();
     }
 
-    public static List<TransportProviderDTO> domainToDTOList(List<TransportProvider>transportationProviders){
+    public static List<TransportProviderDTO> domainToDTOList(List<TransportProvider> transportationProviders) {
         return transportationProviders.stream().map(TransportProviderMapper::domainToDTO).toList();
     }
 
-    public static  List<TransportProvider> dTOToDomainList (List<TransportProviderDTO> transportProvidersDTO){
-        return  transportProvidersDTO.stream().map(TransportProviderMapper::dTOToDomain).toList();
+    public static List<TransportProvider> dTOToDomainList(List<TransportProviderDTO> transportProvidersDTO) {
+        return transportProvidersDTO.stream().map(TransportProviderMapper::dTOToDomain).toList();
+    }
+
+    public static TransportProvider createTransportProvidertoEntity(CreateTransportProviderRequest createTransportProviders) {
+        return TransportProvider.builder()
+                .tpDesc(createTransportProviders.getTpDescription())
+                .tpStatus(Constantes.ESTADO_ACTIVO)
+                .tpRepDate(LocalDateTime.now())
+                .build();
     }
 }

@@ -7,6 +7,7 @@ import co.banco.mio.bancomio.mapper.ValidatorMapper;
 import co.banco.mio.bancomio.repository.UserRepository;
 import co.banco.mio.bancomio.repository.ValidatorRepository;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,4 +37,5 @@ public class ValidatorController {
 
         return ValidatorMapper.domainToDTOList(validatorRepository.findAll());
     }
+
 }

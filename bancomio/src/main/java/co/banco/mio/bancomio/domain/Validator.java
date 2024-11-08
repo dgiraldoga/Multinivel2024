@@ -1,5 +1,6 @@
 package co.banco.mio.bancomio.domain;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import jakarta.persistence.Column;
@@ -24,21 +25,21 @@ import lombok.NoArgsConstructor;
 public class Validator {
 	
 	@Id
-	@Column(nullable=false)
+	@Column(name = "vl_id", nullable=false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer vlId;
 	
 	@Column(name="vl_desc")
 	private String vlDesc;
 	
-	@Column(name="vl_status")
-	private String vlStatus;
+	@Column(name="vl_status", length = 1, nullable=false)
+	private Character vlStatus;
 	
 	@Column(name="vl_regdate")
-	private Date vlRegDate;
+	private LocalDateTime vlRegDate;
 	
 	@ManyToOne
-	@JoinColumn(name="tp_id")
+	@JoinColumn(name="tp_id", referencedColumnName = "tpId")
 	private TransportProvider transportProvider;
 
 }

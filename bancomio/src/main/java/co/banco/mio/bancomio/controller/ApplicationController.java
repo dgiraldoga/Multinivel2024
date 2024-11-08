@@ -1,5 +1,4 @@
 package co.banco.mio.bancomio.controller;
-
 import co.banco.mio.bancomio.dto.ApplicationDTO;
 import co.banco.mio.bancomio.mapper.ApplicationMapper;
 import co.banco.mio.bancomio.repository.ApplicationRepository;
@@ -19,6 +18,7 @@ public class ApplicationController {
         this.applicationRepository = applicationRepository;
     }
 
+
     @GetMapping(value = "/ping")
     public String pingPong() {
         return "pong";
@@ -26,11 +26,7 @@ public class ApplicationController {
 
     @GetMapping(value = "/all")
     public List<ApplicationDTO> getApplications() {
-        /*List<TipoDocumentoDTO> tiposDocumentosDTO;
-        List<TipoDocumento> tipoDocumentos = tipoDocumentoRepository.findAll();
-        tiposDocumentosDTO = TipoDocumentoMapper.domainToDTOList(tipoDocumentos);
-        return tiposDocumentosDTO;*/
 
-        return ApplicationMapper.domainToDTOList(applicationRepository.findAll());
+        return ApplicationMapper.builder().build().toDTOList(applicationRepository.findAll());
     }
 }

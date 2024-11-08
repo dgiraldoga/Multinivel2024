@@ -14,8 +14,7 @@ public class ValidatorDTO {
 	
     private Integer vlId;
 	private String vlDesc;
-	private String vlStatus;
-	private Date vlRegDate;
+	private Character vlStatus;
 	private Integer transportProviderId;
 
 }

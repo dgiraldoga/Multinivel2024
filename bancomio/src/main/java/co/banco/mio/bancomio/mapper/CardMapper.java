@@ -3,32 +3,34 @@ package co.banco.mio.bancomio.mapper;
 import co.banco.mio.bancomio.domain.Card;
 import co.banco.mio.bancomio.dto.CardDTO;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class CardMapper {
 
-    public static CardDTO domainToDTO (Card card){
+    public CardDTO toDTO(Card card) {
         return CardDTO.builder()
                 .serialCard(card.getSerialCard())
-                .cardRegDate(card.getCardRegDate())
-                .cardSatus(card.getCardSatus())
-                .aplicationId(card.getApplication() == null?null: card.getApplication().getAppId())
+                .cardStatus(card.getCardSatus())
+                .applicationId(card.getApplication() == null ? 700: card.getApplication().getAppId())
                 .build();
     }
 
-    public static Card dTOToDomain (CardDTO cardDTO){
+    public Card toEntity(CardDTO cardDTO) {
+
         return Card.builder()
                 .serialCard(cardDTO.getSerialCard())
-                .cardRegDate(cardDTO.getCardRegDate())
-                .cardSatus(cardDTO.getCardSatus())
+                .cardSatus(cardDTO.getCardStatus())
+                .cardRegDate(LocalDateTime.now())
                 .build();
     }
 
-    public static List<CardDTO> domainToDTOList(List<Card>cards){
-        return cards.stream().map(CardMapper::domainToDTO).toList();
+
+    public List<CardDTO> toDTOList(List<Card> cards) {
+        return cards.stream().map(this::toDTO).toList();
     }
 
-    public static  List<Card> dTOToDomainList (List<CardDTO> cardsDTO){
-        return  cardsDTO.stream().map(CardMapper::dTOToDomain).toList();
+    public List<Card> toEntityList(List<CardDTO> cardDTOs) {
+        return cardDTOs.stream().map(this::toEntity).toList();
     }
 }

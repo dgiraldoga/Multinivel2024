@@ -1,7 +1,7 @@
 package co.banco.mio.bancomio.domain;
 
-import java.util.Date;
 
+import java.time.LocalDateTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,17 +22,17 @@ import lombok.NoArgsConstructor;
 public class LineDetail {
 	
 	@Id
-	@Column(nullable=false)
+	@Column(name = "ld_id", nullable=false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer ldId;
 	
 	@Column(name="ld_desc")
 	private String ldDsc;
 	
-	@Column(name="ld_status")
-	private String ldStatus;
+	@Column(name="ld_status", length = 1, nullable = false)
+	private Character ldStatus;
 	
 	@Column(name="ld_regdate")
-	private Date ldRegDate;
+	private LocalDateTime ldRegDate;
 
 }

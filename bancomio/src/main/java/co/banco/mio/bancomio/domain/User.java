@@ -1,7 +1,6 @@
 package co.banco.mio.bancomio.domain;
 
-import java.util.Date;
-
+import java.time.LocalDateTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,7 +18,7 @@ import lombok.*;
 public class User {
 	
 	@Id
-	@Column(nullable=false)
+	@Column(name = "user_id", nullable=false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer userId;
 	
@@ -32,11 +31,11 @@ public class User {
 	@Column(name="city")
 	private String city;
 	
-	@Column(name="status")
-	private String status;
+	@Column(name="status", length = 1, nullable = false)
+	private Character status;
 	
 	@Column(name="user_regdate")
-	private Date userRegDate;
+	private LocalDateTime userRegDate;
 	
 
 }

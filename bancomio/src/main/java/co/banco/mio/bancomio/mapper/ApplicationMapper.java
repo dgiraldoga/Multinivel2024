@@ -2,12 +2,17 @@ package co.banco.mio.bancomio.mapper;
 
 import co.banco.mio.bancomio.domain.Application;
 import co.banco.mio.bancomio.dto.ApplicationDTO;
+import co.banco.mio.bancomio.dto.request.CreateApplicationRequest;
+import co.banco.mio.bancomio.utils.Constantes;
+import lombok.Builder;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+@Builder
 public class ApplicationMapper {
 	
-	public static ApplicationDTO domainToDTO (Application application){
+	public ApplicationDTO toDTO(Application application) {
 		return ApplicationDTO.builder()
 				.appId(application.getAppId())
 				.appDsc(application.getAppDsc())
@@ -15,19 +20,28 @@ public class ApplicationMapper {
 				.build();
 	}
 
-	public static Application dTOToDomain (ApplicationDTO applicationDTO){
+	public Application toEntity(ApplicationDTO applicationDTO) {
 		return Application.builder()
 				.appId(applicationDTO.getAppId())
 				.appDsc(applicationDTO.getAppDsc())
-				.appStatus(applicationDTO.getAppStatus()).build();
+				.appStatus(applicationDTO.getAppStatus())
+				.build();
 	}
 
-	public static List<ApplicationDTO> domainToDTOList(List<Application> applications){
-		return applications.stream().map(ApplicationMapper::domainToDTO).toList();
+	public List<ApplicationDTO> toDTOList(List<Application> applications) {
+		return applications.stream().map(this::toDTO).toList();
 	}
 
-	public static  List<Application> dTOToDomainList (List<ApplicationDTO> aplicationsDTO){
-		return  aplicationsDTO.stream().map(ApplicationMapper::dTOToDomain).toList();
+	public List<Application> toEntityList(List<ApplicationDTO> applicationDTOs) {
+		return applicationDTOs.stream().map(this::toEntity).collect(Collectors.toList());
+	}
+
+	public Application createApplicationRequesttoEntity(CreateApplicationRequest createApplicationRequest) {
+		return Application.builder()
+				.appId(createApplicationRequest.getAppId())
+				.appDsc(createApplicationRequest.getAppDescription())
+				.appStatus(Constantes.ESTADO_ACTIVO)
+				.build();
 	}
 
 }

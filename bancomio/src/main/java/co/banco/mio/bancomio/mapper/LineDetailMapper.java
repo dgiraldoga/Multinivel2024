@@ -2,7 +2,10 @@ package co.banco.mio.bancomio.mapper;
 
 import co.banco.mio.bancomio.domain.LineDetail;
 import co.banco.mio.bancomio.dto.LineDetailDTO;
+import co.banco.mio.bancomio.dto.request.CreateLineDetailsRequest;
+import co.banco.mio.bancomio.utils.Constantes;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class LineDetailMapper {
@@ -12,7 +15,6 @@ public class LineDetailMapper {
                 ldId(lineDetail.getLdId())
                 .ldDsc(lineDetail.getLdDsc())
                 .ldStatus(lineDetail.getLdStatus())
-                .ldRegDate(lineDetail.getLdRegDate())
                 .build();
     }
 
@@ -21,7 +23,7 @@ public class LineDetailMapper {
                 .ldId(lineDetailDTO.getLdId())
                 .ldDsc(lineDetailDTO.getLdDsc())
                 .ldStatus(lineDetailDTO.getLdStatus())
-                .ldRegDate(lineDetailDTO.getLdRegDate())
+                .ldRegDate(LocalDateTime.now())
                 .build();
     }
 
@@ -31,5 +33,13 @@ public class LineDetailMapper {
 
     public static  List<LineDetail> dTOToDomainList (List<LineDetailDTO> lineDetailsDTO){
         return  lineDetailsDTO.stream().map(LineDetailMapper::dTOToDomain).toList();
+    }
+
+    public static LineDetail CreateLineDetailRequesttoEntity(CreateLineDetailsRequest createLineDetailsRequest){
+        return LineDetail.builder()
+                .ldDsc(createLineDetailsRequest.getLd_desc())
+                .ldStatus(Constantes.ESTADO_ACTIVO)
+                .ldRegDate(LocalDateTime.now())
+                .build();
     }
 }

@@ -3,6 +3,7 @@ package co.banco.mio.bancomio.mapper;
 import co.banco.mio.bancomio.domain.Validator;
 import co.banco.mio.bancomio.dto.ValidatorDTO;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ValidatorMapper {
@@ -12,7 +13,6 @@ public class ValidatorMapper {
                 .vlId(validator.getVlId())
                 .vlDesc(validator.getVlDesc())
                 .vlStatus(validator.getVlStatus())
-                .vlRegDate(validator.getVlRegDate())
                 .transportProviderId(validator.getTransportProvider() == null?null: validator.getTransportProvider().getTpId())
                 .build();
     }
@@ -22,7 +22,7 @@ public class ValidatorMapper {
                 .vlId(validatorDTO.getVlId())
                 .vlDesc(validatorDTO.getVlDesc())
                 .vlStatus(validatorDTO.getVlStatus())
-                .vlRegDate(validatorDTO.getVlRegDate())
+                .vlRegDate(LocalDateTime.now())
                 .build();
     }
 

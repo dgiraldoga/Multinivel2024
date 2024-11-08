@@ -16,18 +16,18 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="aplications")
+@Table(name="applications")
 public class Application {
 	
 	@Id
-	@Column(nullable=false)
+	@Column(name = "app_id", nullable=false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer appId;
 	
 	@Column(name="app_desc")
 	private String appDsc;
 	
-	@Column(name="app_status")
-	private String appStatus;
+	@Column(name="app_status", length = 1, nullable=false)
+	private Character appStatus;
 
 }
