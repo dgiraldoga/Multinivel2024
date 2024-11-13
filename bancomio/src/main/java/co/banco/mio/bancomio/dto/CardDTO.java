@@ -1,5 +1,6 @@
 package co.banco.mio.bancomio.dto;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,5 +16,6 @@ public class CardDTO {
     private Integer serialCard;
 	private Character cardStatus;
 	private Integer applicationId;
+	private LocalDateTime cardRedate;
 
 }

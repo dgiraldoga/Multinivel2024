@@ -1,5 +1,6 @@
 package co.banco.mio.bancomio.dto;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,9 +17,8 @@ public class CardUsageDTO {
 	private Integer lineDetailId;
 	private Integer userId;
 	private Integer validatorId;
-	private Date cuDateTime;
+	private LocalDateTime cuDateTime;
 	private Integer fareValue;
 	private Integer typeUsage;
-	private Integer tsn;
 
 }

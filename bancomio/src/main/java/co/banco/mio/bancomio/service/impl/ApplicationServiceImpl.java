@@ -6,11 +6,13 @@ import co.banco.mio.bancomio.dto.request.CreateApplicationRequest;
 import co.banco.mio.bancomio.mapper.ApplicationMapper;
 import co.banco.mio.bancomio.repository.ApplicationRepository;
 import co.banco.mio.bancomio.service.ApplicationService;
-import org.springframework.context.ApplicationListener;
+import co.banco.mio.bancomio.utils.Message;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ApplicationServiceImpl implements ApplicationService {
 
-    private ApplicationRepository applicationRepository;
+    private final ApplicationRepository applicationRepository;
 
     public ApplicationServiceImpl(ApplicationRepository applicationRepository) {
         this.applicationRepository = applicationRepository;
@@ -21,18 +23,18 @@ public class ApplicationServiceImpl implements ApplicationService {
 
         // Valida que el objeto no sea nulo
         if(request == null){
-            throw new Exception("El objeto requerido no puede ser nulo");
+            throw new Exception(Message.OBJECT_NULL.getMessage());
         }
 
         // Valida el numero de digitos del id asignado
-        if ((int) Math.log10(request.getAppId()) + 1 > 3 || (int) Math.log10(request.getAppId()) + 1 < 3){
-            throw new Exception("Id no cumple con el tamanio requerido ");
+        if ((int) Math.log10(request.getAppId()) + 1 != 3){
+            throw new Exception(String.format(Message.SIZE_ID.getMessage(), 3));
         }
 
 
         // Valida el tamanio de la descripccion asignada
         if (request.getAppDescription().isEmpty() || request.getAppDescription().isBlank() || request.getAppDescription().length() > 255){
-            throw new Exception("El descripcion cumple con los criterios de longitud");
+            throw new Exception(String.format(Message.SIZE_DESCRIPTION.getMessage(), 100));
         }
 
         Application application = ApplicationMapper.builder().build().createApplicationRequesttoEntity(request);

@@ -2,7 +2,9 @@ package co.banco.mio.bancomio.mapper;
 
 import co.banco.mio.bancomio.domain.CardUsage;
 import co.banco.mio.bancomio.dto.CardUsageDTO;
+import co.banco.mio.bancomio.dto.request.CreateCardUsageRequest;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class CardUsageMapper {
@@ -16,7 +18,6 @@ public class CardUsageMapper {
                 .cuDateTime(cardUsage.getCuDateTime())
                 .fareValue(cardUsage.getFareValue())
                 .typeUsage(cardUsage.getTypeUsage())
-                .tsn(cardUsage.getTsn())
                 .build();
     }
 
@@ -25,7 +26,6 @@ public class CardUsageMapper {
                 .cuDateTime(cardUsageDTO.getCuDateTime())
                 .fareValue(cardUsageDTO.getFareValue())
                 .typeUsage(cardUsageDTO.getTypeUsage())
-                .tsn(cardUsageDTO.getTsn())
                 .build();
     }
 
@@ -35,5 +35,13 @@ public class CardUsageMapper {
 
     public static  List<CardUsage> dTOToDomainList (List<CardUsageDTO> cardUsagesDTO){
         return  cardUsagesDTO.stream().map(CardUsageMapper::dTOToDomain).toList();
+    }
+
+    public static CardUsage createCardUsageRequesttoEntity(CreateCardUsageRequest createCardUsageRequest){
+        return CardUsage.builder()
+                .cuDateTime(LocalDateTime.now())
+                .typeUsage(createCardUsageRequest.getTypeUsage())
+                .build();
+
     }
 }

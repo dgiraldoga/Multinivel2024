@@ -1,5 +1,6 @@
 package co.banco.mio.bancomio.domain;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import jakarta.persistence.Column;
@@ -45,15 +46,12 @@ public class CardUsage {
 	private Validator validatorId;
 	
 	@Column(name="cu_datetime")
-	private Date cuDateTime;
+	private LocalDateTime cuDateTime;
 	
 	@Column(name="fare_value")
 	private int fareValue;
 	
 	@Column(name="type_usage")
 	private int typeUsage;
-	
-	@Column(name="tsn")
-	private int tsn;
 
 }

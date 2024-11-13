@@ -4,7 +4,7 @@ package co.banco.mio.bancomio.mapper;
 import co.banco.mio.bancomio.domain.User;
 import co.banco.mio.bancomio.dto.UserDTO;
 import co.banco.mio.bancomio.dto.request.CreateUserRequest;
-import co.banco.mio.bancomio.utils.Constantes;
+import co.banco.mio.bancomio.utils.State;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -45,7 +45,7 @@ public class UserMapper {
                 .name(userRequest.getName())
                 .lastName(userRequest.getLastName())
                 .city(userRequest.getCity())
-                .status(Constantes.ESTADO_ACTIVO)
+                .status(State.ACTIVE.getValue())
                 .userRegDate(LocalDateTime.now())
                 .build();
     }

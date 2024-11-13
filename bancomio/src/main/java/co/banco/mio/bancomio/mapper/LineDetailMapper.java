@@ -3,7 +3,7 @@ package co.banco.mio.bancomio.mapper;
 import co.banco.mio.bancomio.domain.LineDetail;
 import co.banco.mio.bancomio.dto.LineDetailDTO;
 import co.banco.mio.bancomio.dto.request.CreateLineDetailsRequest;
-import co.banco.mio.bancomio.utils.Constantes;
+import co.banco.mio.bancomio.utils.State;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -38,7 +38,7 @@ public class LineDetailMapper {
     public static LineDetail CreateLineDetailRequesttoEntity(CreateLineDetailsRequest createLineDetailsRequest){
         return LineDetail.builder()
                 .ldDsc(createLineDetailsRequest.getLd_desc())
-                .ldStatus(Constantes.ESTADO_ACTIVO)
+                .ldStatus(State.ACTIVE.getValue())
                 .ldRegDate(LocalDateTime.now())
                 .build();
     }

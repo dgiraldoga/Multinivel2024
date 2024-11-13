@@ -3,7 +3,7 @@ package co.banco.mio.bancomio.mapper;
 import co.banco.mio.bancomio.domain.TransportProvider;
 import co.banco.mio.bancomio.dto.TransportProviderDTO;
 import co.banco.mio.bancomio.dto.request.CreateTransportProviderRequest;
-import co.banco.mio.bancomio.utils.Constantes;
+import co.banco.mio.bancomio.utils.State;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -38,7 +38,7 @@ public class TransportProviderMapper {
     public static TransportProvider createTransportProvidertoEntity(CreateTransportProviderRequest createTransportProviders) {
         return TransportProvider.builder()
                 .tpDesc(createTransportProviders.getTpDescription())
-                .tpStatus(Constantes.ESTADO_ACTIVO)
+                .tpStatus(State.ACTIVE.getValue())
                 .tpRepDate(LocalDateTime.now())
                 .build();
     }

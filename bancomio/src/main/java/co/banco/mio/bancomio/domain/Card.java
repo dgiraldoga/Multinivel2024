@@ -21,7 +21,7 @@ public class Card {
 	private Integer serialCard;
 	
 	@Column(name="card_status", length = 1, nullable = false)
-	private Character cardSatus;
+	private Character cardStatus;
 	
 	@Column(name="card_regdate")
 	private LocalDateTime cardRegDate;

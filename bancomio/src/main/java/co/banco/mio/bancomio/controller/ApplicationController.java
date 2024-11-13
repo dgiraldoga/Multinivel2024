@@ -1,10 +1,11 @@
 package co.banco.mio.bancomio.controller;
 import co.banco.mio.bancomio.dto.ApplicationDTO;
+import co.banco.mio.bancomio.dto.request.CreateApplicationRequest;
 import co.banco.mio.bancomio.mapper.ApplicationMapper;
 import co.banco.mio.bancomio.repository.ApplicationRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import co.banco.mio.bancomio.service.ApplicationService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -13,11 +14,12 @@ import java.util.List;
 public class ApplicationController {
 
     private final ApplicationRepository applicationRepository;
+    private final ApplicationService applicationService;
 
-    public ApplicationController(ApplicationRepository applicationRepository) {
+    public ApplicationController(ApplicationRepository applicationRepository, ApplicationService applicationService) {
         this.applicationRepository = applicationRepository;
+        this.applicationService = applicationService;
     }
-
 
     @GetMapping(value = "/ping")
     public String pingPong() {
@@ -29,4 +31,11 @@ public class ApplicationController {
 
         return ApplicationMapper.builder().build().toDTOList(applicationRepository.findAll());
     }
+
+    @PostMapping("/addapplication")
+    public ResponseEntity<ApplicationDTO> addApplication(@RequestBody CreateApplicationRequest createApplicationRequest) throws Exception {
+        ApplicationDTO applicationDTO = applicationService.createApplication(createApplicationRequest);
+        return ResponseEntity.ok(applicationDTO);
+    }
+
 }

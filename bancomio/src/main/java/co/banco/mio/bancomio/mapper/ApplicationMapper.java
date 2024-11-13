@@ -3,7 +3,7 @@ package co.banco.mio.bancomio.mapper;
 import co.banco.mio.bancomio.domain.Application;
 import co.banco.mio.bancomio.dto.ApplicationDTO;
 import co.banco.mio.bancomio.dto.request.CreateApplicationRequest;
-import co.banco.mio.bancomio.utils.Constantes;
+import co.banco.mio.bancomio.utils.State;
 import lombok.Builder;
 
 import java.util.List;
@@ -40,7 +40,7 @@ public class ApplicationMapper {
 		return Application.builder()
 				.appId(createApplicationRequest.getAppId())
 				.appDsc(createApplicationRequest.getAppDescription())
-				.appStatus(Constantes.ESTADO_ACTIVO)
+				.appStatus(State.ACTIVE.getValue())
 				.build();
 	}
 

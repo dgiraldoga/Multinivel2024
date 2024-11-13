@@ -1,15 +1,13 @@
 package co.banco.mio.bancomio.controller;
 
-import co.banco.mio.bancomio.dto.UserDTO;
+
 import co.banco.mio.bancomio.dto.ValidatorDTO;
-import co.banco.mio.bancomio.mapper.UserMapper;
+import co.banco.mio.bancomio.dto.request.CreateValidadorRequest;
 import co.banco.mio.bancomio.mapper.ValidatorMapper;
-import co.banco.mio.bancomio.repository.UserRepository;
 import co.banco.mio.bancomio.repository.ValidatorRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import co.banco.mio.bancomio.service.ValidatorService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,10 +16,13 @@ import java.util.List;
 public class ValidatorController {
 
     private final ValidatorRepository validatorRepository;
+    private final ValidatorService validatorService;
 
-    public ValidatorController(ValidatorRepository validatorRepository) {
+    public ValidatorController(ValidatorRepository validatorRepository, ValidatorService validatorService) {
         this.validatorRepository = validatorRepository;
+        this.validatorService = validatorService;
     }
+
 
     @GetMapping(value = "/ping")
     public String pingPong() {
@@ -30,12 +31,12 @@ public class ValidatorController {
 
     @GetMapping(value = "/all")
     public List<ValidatorDTO> getValidators() {
-        /*List<TipoDocumentoDTO> tiposDocumentosDTO;
-        List<TipoDocumento> tipoDocumentos = tipoDocumentoRepository.findAll();
-        tiposDocumentosDTO = TipoDocumentoMapper.domainToDTOList(tipoDocumentos);
-        return tiposDocumentosDTO;*/
-
         return ValidatorMapper.domainToDTOList(validatorRepository.findAll());
     }
 
+    @PostMapping("/addvalidator")
+    public ResponseEntity<ValidatorDTO> addValidator(@RequestBody CreateValidadorRequest request) throws Exception {
+        ValidatorDTO validatorDTO = validatorService.createValidator(request);
+        return ResponseEntity.ok(validatorDTO);
+    }
 }
