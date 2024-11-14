@@ -10,5 +10,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateCardUsageRequest {
+    private Integer serialCardNumber;
+    private Integer lineDetailId;
+    private Integer userId;
+    private Integer validator_id;
     private Integer typeUsage;
+
 }
