@@ -9,7 +9,10 @@ import co.banco.mio.bancomio.repository.ApplicationRepository;
 import co.banco.mio.bancomio.repository.CardRepository;
 import co.banco.mio.bancomio.service.CardService;
 import co.banco.mio.bancomio.utils.Message;
+import co.banco.mio.bancomio.utils.State;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -52,5 +55,55 @@ public class CardServiceImpl implements CardService {
         return CardMapper.builder().build().toDTO(card);
 
 
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public CardDTO inactivateCard(Integer cardId) throws Exception {
+
+        Card card = findById(cardId);
+
+        if (card.getCardStatus().equals(State.INACTIVE)) {
+            throw new Exception(
+                    String.format(
+                            Message.TARJETA_EN_ESTADO.getMessage(),
+                            card.getSerialCard(), State.INACTIVE.getValue()
+                    )
+            );
+        }
+
+        card.setCardStatus(State.INACTIVE.getValue());
+        card = cardRepository.save(card);
+        return CardMapper.builder().build().toDTO(card);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public CardDTO activateCard(Integer cardId) throws Exception {
+        Card card = findById(cardId);
+
+        if (card.getCardStatus().equals(State.ACTIVE)) {
+            throw new Exception(
+                    String.format(
+                            Message.TARJETA_EN_ESTADO.getMessage(),
+                            card.getSerialCard(), State.ACTIVE.getValue()
+                    )
+            );
+        }
+
+        card.setCardStatus(State.ACTIVE.getValue());
+        card = cardRepository.save(card);
+        return CardMapper.builder().build().toDTO(card);
+    }
+
+    @Transactional(readOnly = true)
+    protected Card findById(Integer id) throws Exception {
+        // Consultar la categoría y si no la encuentra, lanza excepcion
+        return cardRepository.findById(id)
+                .orElseThrow(
+                        () -> new Exception(
+                                String.format(Message.NO_EXISTE_TARJETA_X_ID.getMessage(), id)
+                        )
+                );
     }
 }
