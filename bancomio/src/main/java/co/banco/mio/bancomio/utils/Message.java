@@ -12,7 +12,8 @@ public enum Message {
     TARJETA_EN_ESTADO("La tarjeta %d - %s se encuentra en estado %s - %s"),
     NO_EXISTE_TARJETA_X_ID("No se encontró la Tarjeta con Id: %d"),
     USUARIO_EN_ESTADO("El usuario %d - %s se encuentra en estado %s - %s"),
-    NO_EXISTE_USUARIO_X_ID("No se encontró el usuario con Id: %d");
+    NO_EXISTE_USUARIO_X_ID("No se encontró el usuario con Id: %d"),
+    TYPE_USAGE("El %d no es un tipo de uso valido [ 0 - Integracion, 1 - Uso Pago ]");
 
 
 

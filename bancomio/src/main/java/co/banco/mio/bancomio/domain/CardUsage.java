@@ -31,19 +31,19 @@ public class CardUsage {
 	
 	@ManyToOne
 	@JoinColumn(name="serial_card")
-	private Card cardId;
+	private Card card;
 	
 	@ManyToOne
 	@JoinColumn(name="ld_id")
-	private LineDetail lineDetailId;
+	private LineDetail lineDetail;
 	
 	@ManyToOne
 	@JoinColumn(name="user_id")
-	private User userId;
+	private User user;
 	
 	@ManyToOne
 	@JoinColumn(name="vl_id")
-	private Validator validatorId;
+	private Validator validator;
 	
 	@Column(name="cu_datetime")
 	private LocalDateTime cuDateTime;

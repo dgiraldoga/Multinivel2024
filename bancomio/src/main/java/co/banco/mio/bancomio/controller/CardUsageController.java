@@ -1,14 +1,12 @@
 package co.banco.mio.bancomio.controller;
 
-import co.banco.mio.bancomio.dto.CardDTO;
 import co.banco.mio.bancomio.dto.CardUsageDTO;
-import co.banco.mio.bancomio.mapper.CardMapper;
+import co.banco.mio.bancomio.dto.request.CreateCardUsageRequest;
 import co.banco.mio.bancomio.mapper.CardUsageMapper;
-import co.banco.mio.bancomio.repository.CardRepository;
 import co.banco.mio.bancomio.repository.CardUsageRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import co.banco.mio.bancomio.service.CardUsageService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,9 +15,11 @@ import java.util.List;
 public class CardUsageController {
 
     private final CardUsageRepository cardUsageRepository;
+    private final CardUsageService cardUsageService;
 
-    public CardUsageController(CardUsageRepository cardUsageRepository) {
+    public CardUsageController(CardUsageRepository cardUsageRepository, CardUsageService cardUsageService) {
         this.cardUsageRepository = cardUsageRepository;
+        this.cardUsageService = cardUsageService;
     }
 
     @GetMapping(value = "/ping")
@@ -29,11 +29,14 @@ public class CardUsageController {
 
     @GetMapping(value = "/all")
     public List<CardUsageDTO> getCardUsages() {
-        /*List<TipoDocumentoDTO> tiposDocumentosDTO;
-        List<TipoDocumento> tipoDocumentos = tipoDocumentoRepository.findAll();
-        tiposDocumentosDTO = TipoDocumentoMapper.domainToDTOList(tipoDocumentos);
-        return tiposDocumentosDTO;*/
-
         return CardUsageMapper.domainToDTOList(cardUsageRepository.findAll());
     }
+
+    @PostMapping("/addCardUsage")
+    public ResponseEntity <CardUsageDTO> addCardUsage(@RequestBody CreateCardUsageRequest request) throws Exception {
+        CardUsageDTO cardUsageDTO = cardUsageService.addCardUsage(request);
+        return ResponseEntity.ok(cardUsageDTO);
+    }
+
+
 }
