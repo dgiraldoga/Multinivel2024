@@ -11,10 +11,10 @@ public class CardUsageMapper {
 
     public static CardUsageDTO domainToDTO (CardUsage cardUsage){
         return CardUsageDTO.builder()
-                .cardId(cardUsage.getCardId() == null?null: cardUsage.getCardId().getSerialCard())
-                .lineDetailId(cardUsage.getLineDetailId() == null?null: cardUsage.getLineDetailId().getLdId())
-                .userId(cardUsage.getUserId() == null?null: cardUsage.getUserId().getUserId())
-                .validatorId(cardUsage.getValidatorId() == null?null: cardUsage.getValidatorId().getVlId())
+                .cardId(cardUsage.getId() == null?null: cardUsage.getCard().getSerialCard())
+                .lineDetailId(cardUsage.getLineDetail() == null?null: cardUsage.getLineDetail().getLdId())
+                .userId(cardUsage.getUser() == null?null: cardUsage.getUser().getUserId())
+                .validatorId(cardUsage.getValidator() == null?null: cardUsage.getValidator().getVlId())
                 .cuDateTime(cardUsage.getCuDateTime())
                 .fareValue(cardUsage.getFareValue())
                 .typeUsage(cardUsage.getTypeUsage())

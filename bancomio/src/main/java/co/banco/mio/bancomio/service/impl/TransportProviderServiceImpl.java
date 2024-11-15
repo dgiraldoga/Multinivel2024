@@ -1,12 +1,14 @@
 package co.banco.mio.bancomio.service.impl;
 
 import co.banco.mio.bancomio.domain.TransportProvider;
+import co.banco.mio.bancomio.domain.Validator;
 import co.banco.mio.bancomio.dto.TransportProviderDTO;
 import co.banco.mio.bancomio.dto.request.CreateTransportProviderRequest;
 import co.banco.mio.bancomio.mapper.TransportProviderMapper;
 import co.banco.mio.bancomio.repository.TransportProviderRepository;
 import co.banco.mio.bancomio.service.TransportProviderService;
 import co.banco.mio.bancomio.utils.Message;
+import org.springframework.transaction.annotation.Transactional;
 
 
 public class TransportProviderServiceImpl implements TransportProviderService {
@@ -31,5 +33,24 @@ public class TransportProviderServiceImpl implements TransportProviderService {
         TransportProvider savedTransportProvider = transportProviderRepository.save(transportProvider);
 
         return TransportProviderMapper.domainToDTO(savedTransportProvider);
+    }
+
+    @Override
+    @Transactional
+    public void eliminarTransportProvider(Integer transportPID) throws Exception {
+
+        TransportProvider transportProvider = transportProviderRepository.findById(transportPID)
+                .orElseThrow(() -> new IllegalArgumentException("El transpport provider con ID " + transportPID + " no existe."));
+
+        if (transportProvider.getValidators() != null && !transportProvider.getValidators().isEmpty()) {
+            // Opción: lanzar una excepción si tiene pedidos asociados
+            // throw new IllegalArgumentException("El producto tiene pedidos asociados y no se puede eliminar.");
+
+            // Opción: eliminar los pedidos manualmente
+            transportProvider.getValidators().clear();
+            transportProviderRepository.save(transportProvider);
+        }
+
+        transportProviderRepository.delete(transportProvider);
     }
 }

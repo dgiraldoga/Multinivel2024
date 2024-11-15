@@ -1,12 +1,8 @@
 package co.banco.mio.bancomio.mapper;
 
-import co.banco.mio.bancomio.domain.Card;
 import co.banco.mio.bancomio.domain.Validator;
-import co.banco.mio.bancomio.dto.CardDTO;
 import co.banco.mio.bancomio.dto.ValidatorDTO;
-import co.banco.mio.bancomio.dto.request.CreateCardRequest;
 import co.banco.mio.bancomio.dto.request.CreateValidadorRequest;
-import co.banco.mio.bancomio.dto.request.ValidatorRequest;
 import co.banco.mio.bancomio.utils.State;
 
 import java.time.LocalDateTime;
