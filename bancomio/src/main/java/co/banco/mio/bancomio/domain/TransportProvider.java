@@ -32,7 +32,7 @@ public class TransportProvider {
     @Column(name = "tp_repdate")
     private LocalDateTime tpRepDate;
 
-    @OneToMany(mappedBy = "validators", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "transportProvider", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List <Validator> validators;
 
 }

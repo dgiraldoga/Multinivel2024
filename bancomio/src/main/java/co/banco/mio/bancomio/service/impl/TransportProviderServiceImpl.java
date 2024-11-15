@@ -8,9 +8,10 @@ import co.banco.mio.bancomio.mapper.TransportProviderMapper;
 import co.banco.mio.bancomio.repository.TransportProviderRepository;
 import co.banco.mio.bancomio.service.TransportProviderService;
 import co.banco.mio.bancomio.utils.Message;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
+@Service
 public class TransportProviderServiceImpl implements TransportProviderService {
     private final TransportProviderRepository transportProviderRepository;
 

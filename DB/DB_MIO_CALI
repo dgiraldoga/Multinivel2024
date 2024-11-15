@@ -6,7 +6,7 @@ CREATE SCHEMA mio AUTHORIZATION mio_cali;
 
 TABLES 
 
-CREATE TABLE mio.users (
+CREATE TABLE users (
 user_id integer PRIMARY KEY NOT NULL,
 name_user varchar (100),
 lastname_user varchar (100),
@@ -16,23 +16,23 @@ user_regdate timestamp DEFAULT current_timestamp,
 CHECK(status IN ('A', 'I'))
 );
 
-CREATE TABLE mio.applications (
+CREATE TABLE applications (
 app_id integer PRIMARY KEY NOT NULL,
 app_desc varchar (100) NOT NULL, 
 app_status char(1),
 CHECK (app_status IN ('A', 'I'))
 );
 
-CREATE TABLE mio.cards (
+CREATE TABLE cards (
 serial_card integer PRIMARY KEY NOT NULL,
 card_status char(1),
 card_regdate timestamp DEFAULT current_timestamp,
 app_id integer,
 CHECK(card_status IN ('A', 'I')),
-CONSTRAINT fk_app_id FOREIGN KEY (app_id) REFERENCES mio.applications (app_id)
+CONSTRAINT fk_app_id FOREIGN KEY (app_id) REFERENCES applications (app_id)
 );
 
-CREATE TABLE mio.cards_x_users(
+CREATE TABLE cards_x_users(
 
 id serial PRIMARY KEY NOT NULL,
 serial_card integer,
@@ -40,11 +40,11 @@ user_id integer,
 crd_usr_status char(1),
 crd_usr_regdate timestamp DEFAULT current_timestamp,
 CHECK(crd_usr_status IN ('A', 'I')),
-CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES mio.users(user_id),
-CONSTRAINT fk_card FOREIGN KEY (serial_card) REFERENCES mio.cards(serail_card)
+CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(user_id),
+CONSTRAINT fk_card FOREIGN KEY (serial_card) REFERENCES cards(serial_card)
 );
 
-CREATE TABLE mio.line_details(
+CREATE TABLE line_details(
 
 ld_id integer PRIMARY KEY NOT null,
 ld_desc varchar (100),
@@ -53,25 +53,26 @@ ld_regdate timestamp DEFAULT current_timestamp,
 CHECK(ld_status IN ('A', 'I'))
 );
 
-create table mio.transport_providers(
+create table transport_providers(
 tp_id int primary key not null, 
 tp_desc varchar (100),
-tp_status chr(1),
+tp_status char(1),
 tp_repdate timestamp default current_timestamp, 
 check (tp_status in ('A', 'I'))
 );
 
-create table mio.validators(
+create table validators(
 vl_id int primary key not null, 
 val_desc varchar(100),
 val_status char(1),
 val_regdate timestamp default current_timestamp,
-CONSTRAINT fk_transport FOREIGN KEY (tp_id) REFERENCES mio.transport_providers(tp_id)
+tp_id integer,
+CONSTRAINT fk_transport FOREIGN KEY (tp_id) REFERENCES transport_providers(tp_id)
 
 );
 
 
-CREATE TABLE mio.cards_usages(
+CREATE TABLE cards_usages(
 id serial PRIMARY KEY NOT NULL,
 serial_card integer,
 ld_id integer,
@@ -81,100 +82,86 @@ cu_datetime timestamp,
 fare_value integer NOT NULL, 
 type_usage integer NOT NULL,
 tsn integer NOT NULL,
-CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES mio.users(user_id),
-CONSTRAINT fk_card FOREIGN KEY (serial_card) REFERENCES mio.cards(serail_card),
-CONSTRAINT fk_line FOREIGN KEY (ld_id) REFERENCES mio.line_details(ld_id), 
-CONSTRAINT fk_validators FOREIGN KEY (vl_id) REFERENCES mio.validators(vl_id)
+CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(user_id),
+CONSTRAINT fk_card FOREIGN KEY (serial_card) REFERENCES cards(serial_card),
+CONSTRAINT fk_line FOREIGN KEY (ld_id) REFERENCES line_details(ld_id), 
+CONSTRAINT fk_validators FOREIGN KEY (vl_id) REFERENCES validators(vl_id)
 
-)
-
-INSERTS
+);
 
 
-INSERT INTO mio.transport_providers (tp_id, tp_desc, tp_status) VALUES (1, 'GIT MASIVO', 'A');
-INSERT INTO mio.transport_providers (tp_id, tp_desc, tp_status) VALUES (3, 'ETM', 'A');
-INSERT INTO mio.transport_providers (tp_id, tp_desc, tp_status) VALUES (4, 'UNIMETRO', 'A');
-INSERT INTO mio.transport_providers (tp_id, tp_desc, tp_status) VALUES (34, 'MARKA COLOMBIANA', 'A');
-INSERT INTO mio.transport_providers (tp_id, tp_desc, tp_status) VALUES (44, 'MIO CABLE', 'A');
+INSERT INTO transport_providers (tp_id, tp_desc, tp_status) VALUES (1, 'GIT MASIVO', 'A');
+INSERT INTO transport_providers (tp_id, tp_desc, tp_status) VALUES (3, 'ETM', 'A');
+INSERT INTO transport_providers (tp_id, tp_desc, tp_status) VALUES (4, 'UNIMETRO', 'A');
+INSERT INTO transport_providers (tp_id, tp_desc, tp_status) VALUES (34, 'MARKA COLOMBIANA', 'A');
+INSERT INTO transport_providers (tp_id, tp_desc, tp_status) VALUES (44, 'MIO CABLE', 'A');
 
 
-INSERT INTO mio.applications (app_id, app_desc, app_status) VALUES (902, 'BANCOLOMBIA', 'A');
-INSERT INTO mio.applications (app_id, app_desc, app_status) VALUES (600, 'DEFICIENTE FISICO', 'A');
-INSERT INTO mio.applications (app_id, app_desc, app_status) VALUES (700, 'FUNCIONAL', 'A');
-INSERT INTO mio.applications (app_id, app_desc, app_status) VALUES (920, 'BANCO DE BOGOTA', 'A');
+INSERT INTO applications (app_id, app_desc, app_status) VALUES (902, 'BANCOLOMBIA', 'A');
+INSERT INTO applications (app_id, app_desc, app_status) VALUES (600, 'DEFICIENTE FISICO', 'A');
+INSERT INTO applications (app_id, app_desc, app_status) VALUES (700, 'FUNCIONAL', 'A');
+INSERT INTO applications (app_id, app_desc, app_status) VALUES (920, 'BANCO DE BOGOTA', 'A');
 
 
-INSERT INTO mio.line_details (ld_id, ld_desc, ld_status) VALUES (37, 'ESTACION FLORA INDUSTRIAL', 'A');
-INSERT INTO mio.line_details (ld_id, ld_desc, ld_status) VALUES (38, 'ESTACION SALOMIA', 'A');
-INSERT INTO mio.line_details (ld_id, ld_desc, ld_status) VALUES (39, 'ESTACION POPULAR', 'A');
-INSERT INTO mio.line_details (ld_id, ld_desc, ld_status) VALUES (40, 'ESTACION MANZANARES', 'A');
-INSERT INTO mio.line_details (ld_id, ld_desc, ld_status) VALUES (41, 'ESTACION FATIMA', 'A');
-INSERT INTO mio.line_details (ld_id, ld_desc, ld_status) VALUES (42, 'ESTACION SAN NICOLAS', 'A');
-INSERT INTO mio.line_details (ld_id, ld_desc, ld_status) VALUES (43, 'ESTACION TORRE DE CALI', 'A');
-INSERT INTO mio.line_details (ld_id, ld_desc, ld_status) VALUES (47, 'ESTACION CANAVERALEJO', 'A');
-INSERT INTO mio.line_details (ld_id, ld_desc, ld_status) VALUES (1, 'T47A - COMPLEMENTARIO', 'A');
-INSERT INTO mio.line_details (ld_id, ld_desc, ld_status) VALUES (32, 'ESTACION FRAY DAMIAN', 'A');
+INSERT INTO line_details (ld_id, ld_desc, ld_status) VALUES (37, 'ESTACION FLORA INDUSTRIAL', 'A');
+INSERT INTO line_details (ld_id, ld_desc, ld_status) VALUES (38, 'ESTACION SALOMIA', 'A');
+INSERT INTO line_details (ld_id, ld_desc, ld_status) VALUES (39, 'ESTACION POPULAR', 'A');
+INSERT INTO line_details (ld_id, ld_desc, ld_status) VALUES (40, 'ESTACION MANZANARES', 'A');
+INSERT INTO line_details (ld_id, ld_desc, ld_status) VALUES (41, 'ESTACION FATIMA', 'A');
+INSERT INTO line_details (ld_id, ld_desc, ld_status) VALUES (42, 'ESTACION SAN NICOLAS', 'A');
+INSERT INTO line_details (ld_id, ld_desc, ld_status) VALUES (43, 'ESTACION TORRE DE CALI', 'A');
+INSERT INTO line_details (ld_id, ld_desc, ld_status) VALUES (47, 'ESTACION CANAVERALEJO', 'A');
+INSERT INTO line_details (ld_id, ld_desc, ld_status) VALUES (1, 'T47A - COMPLEMENTARIO', 'A');
+INSERT INTO line_details (ld_id, ld_desc, ld_status) VALUES (32, 'ESTACION FRAY DAMIAN', 'A');
 
 
-INSERT INTO mio.users (user_id, name_user, lastname_user, city, status) VALUES (376, 'USUARIO COMUN PRUEBAS  #124', 'PRUEBA', 'CALI', 'A');
-INSERT INTO mio.users (user_id, name_user, lastname_user, city, status) VALUES (577, 'USUARIO COMUN PRUEBAS  #491', 'PRUEBA', 'CALI', 'A');
-INSERT INTO mio.users (user_id, name_user, lastname_user, city, status) VALUES (578, 'USUARIO COMUN PRUEBAS  #492', 'PRUEBA', 'CALI', 'A');
-INSERT INTO mio.users (user_id, name_user, lastname_user, city, status) VALUES (579, 'USUARIO COMUN PRUEBAS  #493', 'PRUEBA', 'CALI', 'A');
-INSERT INTO mio.users (user_id, name_user, lastname_user, city, status) VALUES (580, 'USUARIO COMUN PRUEBAS  #494', 'PRUEBA', 'CALI', 'A');
-INSERT INTO mio.users (user_id, name_user, lastname_user, city, status) VALUES (581, 'USUARIO COMUN PRUEBAS  #495', 'PRUEBA', 'CALI', 'A');
-INSERT INTO mio.users (user_id, name_user, lastname_user, city, status) VALUES (582, 'USUARIO COMUN PRUEBAS  #496', 'PRUEBA', 'CALI', 'A');
-INSERT INTO mio.users (user_id, name_user, lastname_user, city, status) VALUES (583, 'USUARIO COMUN PRUEBAS  #497', 'PRUEBA', 'CALI', 'A');
-INSERT INTO mio.users (user_id, name_user, lastname_user, city, status) VALUES (584, 'USUARIO COMUN PRUEBAS  #498', 'PRUEBA', 'CALI', 'A');
-INSERT INTO mio.users (user_id, name_user, lastname_user, city, status) VALUES (585, 'USUARIO COMUN PRUEBAS  499', 'PRUEBA', 'CALI', 'A');
+INSERT INTO users (user_id, name_user, lastname_user, city, status) VALUES (376, 'USUARIO COMUN PRUEBAS  #124', 'PRUEBA', 'CALI', 'A');
+INSERT INTO users (user_id, name_user, lastname_user, city, status) VALUES (577, 'USUARIO COMUN PRUEBAS  #491', 'PRUEBA', 'CALI', 'A');
+INSERT INTO users (user_id, name_user, lastname_user, city, status) VALUES (578, 'USUARIO COMUN PRUEBAS  #492', 'PRUEBA', 'CALI', 'A');
+INSERT INTO users (user_id, name_user, lastname_user, city, status) VALUES (579, 'USUARIO COMUN PRUEBAS  #493', 'PRUEBA', 'CALI', 'A');
+INSERT INTO users (user_id, name_user, lastname_user, city, status) VALUES (580, 'USUARIO COMUN PRUEBAS  #494', 'PRUEBA', 'CALI', 'A');
+INSERT INTO users (user_id, name_user, lastname_user, city, status) VALUES (581, 'USUARIO COMUN PRUEBAS  #495', 'PRUEBA', 'CALI', 'A');
+INSERT INTO users (user_id, name_user, lastname_user, city, status) VALUES (582, 'USUARIO COMUN PRUEBAS  #496', 'PRUEBA', 'CALI', 'A');
+INSERT INTO users (user_id, name_user, lastname_user, city, status) VALUES (583, 'USUARIO COMUN PRUEBAS  #497', 'PRUEBA', 'CALI', 'A');
+INSERT INTO users (user_id, name_user, lastname_user, city, status) VALUES (584, 'USUARIO COMUN PRUEBAS  #498', 'PRUEBA', 'CALI', 'A');
+INSERT INTO users (user_id, name_user, lastname_user, city, status) VALUES (585, 'USUARIO COMUN PRUEBAS  499', 'PRUEBA', 'CALI', 'A');
 
 
 
-INSERT INTO mio.cards (serial_card, card_status, app_id) VALUES (1961171, 'A', 902);
-INSERT INTO mio.cards (serial_card, card_status, app_id) VALUES (1961172, 'A', 600);
-INSERT INTO mio.cards (serial_card, card_status, app_id) VALUES (1961173, 'A', 700);
-INSERT INTO mio.cards (serial_card, card_status, app_id) VALUES (1961174, 'A', 920);
-INSERT INTO mio.cards (serial_card, card_status, app_id) VALUES (1961175, 'A', 902);
-INSERT INTO mio.cards (serial_card, card_status, app_id) VALUES (1961176, 'A', 600);
-INSERT INTO mio.cards (serial_card, card_status, app_id) VALUES (1961177, 'A', 700);
-INSERT INTO mio.cards (serial_card, card_status, app_id) VALUES (1961178, 'A', 920);
-INSERT INTO mio.cards (serial_card, card_status, app_id) VALUES (1961179, 'A', 902);
-INSERT INTO mio.cards (serial_card, card_status, app_id) VALUES (1961180, 'A', 600);
+INSERT INTO cards (serial_card, card_status, app_id) VALUES (1961171, 'A', 902);
+INSERT INTO cards (serial_card, card_status, app_id) VALUES (1961172, 'A', 600);
+INSERT INTO cards (serial_card, card_status, app_id) VALUES (1961173, 'A', 700);
+INSERT INTO cards (serial_card, card_status, app_id) VALUES (1961174, 'A', 920);
+INSERT INTO cards (serial_card, card_status, app_id) VALUES (1961175, 'A', 902);
+INSERT INTO cards (serial_card, card_status, app_id) VALUES (1961176, 'A', 600);
+INSERT INTO cards (serial_card, card_status, app_id) VALUES (1961177, 'A', 700);
+INSERT INTO cards (serial_card, card_status, app_id) VALUES (1961178, 'A', 920);
+INSERT INTO cards (serial_card, card_status, app_id) VALUES (1961179, 'A', 902);
+INSERT INTO cards (serial_card, card_status, app_id) VALUES (1961180, 'A', 600);
 
 
-INSERT INTO mio.validators  (tp_id, val_desc, val_status, vl_id) VALUES (1, 'VALIDATOR 1', 'A', 2804);
-INSERT INTO mio.validators  (tp_id, val_desc, val_status, vl_id) VALUES (3, 'VALIDATOR 2', 'A', 9104);
-INSERT INTO mio.validators  (tp_id, val_desc, val_status, vl_id) VALUES (4, 'VALIDATOR 3', 'A', 9105);
-INSERT INTO mio.validators  (tp_id, val_desc, val_status, vl_id) VALUES (34, 'VALIDATOR 4', 'A', 9106);
-INSERT INTO mio.validators  (tp_id, val_desc, val_status, vl_id) VALUES (44, 'VALIDATOR 5', 'A', 9107);
-INSERT INTO mio.validators  (tp_id, val_desc, val_status, vl_id) VALUES (1, 'VALIDATOR 6', 'A', 9108);
-INSERT INTO mio.validators  (tp_id, val_desc, val_status, vl_id) VALUES (3, 'VALIDATOR 7', 'A', 9109);
-INSERT INTO mio.validators  (tp_id, val_desc, val_status, vl_id) VALUES (4, 'VALIDATOR 8', 'A', 9110);
-INSERT INTO mio.validators  (tp_id, val_desc, val_status, vl_id) VALUES (34, 'VALIDATOR 9', 'A', 3802);
-INSERT INTO mio.validators  (tp_id, val_desc, val_status, vl_id) VALUES (44, 'VALIDATOR 10', 'A', 3803);
-INSERT INTO mio.validators  (tp_id, val_desc, val_status, vl_id) VALUES (1, 'VALIDATOR 11', 'A', 3401);
-INSERT INTO mio.validators  (tp_id, val_desc, val_status, vl_id) VALUES (3, 'VALIDATOR 12', 'A', 3402);
-INSERT INTO mio.validators  (tp_id, val_desc, val_status, vl_id) VALUES (4, 'VALIDATOR 13', 'A', 3403);
-INSERT INTO mio.validators  (tp_id, val_desc, val_status, vl_id) VALUES (34, 'VALIDATOR 14', 'A', 2802);
-INSERT INTO mio.validators  (tp_id, val_desc, val_status, vl_id) VALUES (44, 'VALIDATOR 15', 'A', 3702);
-INSERT INTO mio.validators  (tp_id, val_desc, val_status, vl_id) VALUES (1, 'VALIDATOR 16', 'A', 3703);
-INSERT INTO mio.validators  (tp_id, val_desc, val_status, vl_id) VALUES (3, 'VALIDATOR 17', 'A', 3602);
-INSERT INTO mio.validators  (tp_id, val_desc, val_status, vl_id) VALUES (4, 'VALIDATOR 18', 'A', 3603);
-INSERT INTO mio.validators  (tp_id, val_desc, val_status, vl_id) VALUES (34, 'VALIDATOR 19', 'A', 3502);
-INSERT INTO mio.validators  (tp_id, val_desc, val_status, vl_id) VALUES (44, 'VALIDATOR 20', 'A', 3503);
-INSERT INTO mio.validators  (tp_id, val_desc, val_status, vl_id) VALUES (1, 'VALIDATOR 21', 'A', 4103);
-INSERT INTO mio.validators  (tp_id, val_desc, val_status, vl_id) VALUES (3, 'VALIDATOR 22', 'A', 4202);
-INSERT INTO mio.validators  (tp_id, val_desc, val_status, vl_id) VALUES (4, 'VALIDATOR 23', 'A', 4201);
-INSERT INTO mio.validators  (tp_id, val_desc, val_status, vl_id) VALUES (34, 'VALIDATOR 24', 'A', 4203);
-INSERT INTO mio.validators  (tp_id, val_desc, val_status, vl_id) VALUES (44, 'VALIDATOR 25', 'A', 2806);
-
-
-
-INSERT INTO mio.cards_usages  (serial_card, ld_id, user_id, vl_id, cu_datetime, fare_value, type_usage) VALUES (1961171, 37, 376, 2804, '2024-11-06 07:51:58.000', 2900, 0);
-INSERT INTO mio.cards_usages  (serial_card, ld_id, user_id, vl_id, cu_datetime, fare_value, type_usage) VALUES (1961172, 38, 577, 9104, '2024-11-06 08:56:53.000', 2900, 0);
-INSERT INTO mio.cards_usages  (serial_card, ld_id, user_id, vl_id, cu_datetime, fare_value, type_usage) VALUES (1961173, 39, 578, 9105, '2024-11-06 08:57:02.000', 2900, 0);
-INSERT INTO mio.cards_usages  (serial_card, ld_id, user_id, vl_id, cu_datetime, fare_value, type_usage) VALUES (1961174, 40, 579, 9106, '2024-11-06 13:42:32.000', 2900, 0);
-INSERT INTO mio.cards_usages  (serial_card, ld_id, user_id, vl_id, cu_datetime, fare_value, type_usage) VALUES (1961175, 41, 580, 9107, '2024-11-06 13:42:40.000', 2900, 0);
-INSERT INTO mio.cards_usages  (serial_card, ld_id, user_id, vl_id, cu_datetime, fare_value, type_usage) VALUES (1961176, 42, 581, 9108, '2024-11-07 09:41:58.000', 0, 1);
-
-
-
+INSERT INTO validators  (tp_id, val_desc, val_status, vl_id) VALUES (1, 'VALIDATOR 1', 'A', 2804);
+INSERT INTO validators  (tp_id, val_desc, val_status, vl_id) VALUES (3, 'VALIDATOR 2', 'A', 9104);
+INSERT INTO validators  (tp_id, val_desc, val_status, vl_id) VALUES (4, 'VALIDATOR 3', 'A', 9105);
+INSERT INTO validators  (tp_id, val_desc, val_status, vl_id) VALUES (34, 'VALIDATOR 4', 'A', 9106);
+INSERT INTO validators  (tp_id, val_desc, val_status, vl_id) VALUES (44, 'VALIDATOR 5', 'A', 9107);
+INSERT INTO validators  (tp_id, val_desc, val_status, vl_id) VALUES (1, 'VALIDATOR 6', 'A', 9108);
+INSERT INTO validators  (tp_id, val_desc, val_status, vl_id) VALUES (3, 'VALIDATOR 7', 'A', 9109);
+INSERT INTO validators  (tp_id, val_desc, val_status, vl_id) VALUES (4, 'VALIDATOR 8', 'A', 9110);
+INSERT INTO validators  (tp_id, val_desc, val_status, vl_id) VALUES (34, 'VALIDATOR 9', 'A', 3802);
+INSERT INTO validators  (tp_id, val_desc, val_status, vl_id) VALUES (44, 'VALIDATOR 10', 'A', 3803);
+INSERT INTO validators  (tp_id, val_desc, val_status, vl_id) VALUES (1, 'VALIDATOR 11', 'A', 3401);
+INSERT INTO validators  (tp_id, val_desc, val_status, vl_id) VALUES (3, 'VALIDATOR 12', 'A', 3402);
+INSERT INTO validators  (tp_id, val_desc, val_status, vl_id) VALUES (4, 'VALIDATOR 13', 'A', 3403);
+INSERT INTO validators  (tp_id, val_desc, val_status, vl_id) VALUES (34, 'VALIDATOR 14', 'A', 2802);
+INSERT INTO validators  (tp_id, val_desc, val_status, vl_id) VALUES (44, 'VALIDATOR 15', 'A', 3702);
+INSERT INTO validators  (tp_id, val_desc, val_status, vl_id) VALUES (1, 'VALIDATOR 16', 'A', 3703);
+INSERT INTO validators  (tp_id, val_desc, val_status, vl_id) VALUES (3, 'VALIDATOR 17', 'A', 3602);
+INSERT INTO validators  (tp_id, val_desc, val_status, vl_id) VALUES (4, 'VALIDATOR 18', 'A', 3603);
+INSERT INTO validators  (tp_id, val_desc, val_status, vl_id) VALUES (34, 'VALIDATOR 19', 'A', 3502);
+INSERT INTO validators  (tp_id, val_desc, val_status, vl_id) VALUES (44, 'VALIDATOR 20', 'A', 3503);
+INSERT INTO validators  (tp_id, val_desc, val_status, vl_id) VALUES (1, 'VALIDATOR 21', 'A', 4103);
+INSERT INTO validators  (tp_id, val_desc, val_status, vl_id) VALUES (3, 'VALIDATOR 22', 'A', 4202);
+INSERT INTO validators  (tp_id, val_desc, val_status, vl_id) VALUES (4, 'VALIDATOR 23', 'A', 4201);
+INSERT INTO validators  (tp_id, val_desc, val_status, vl_id) VALUES (34, 'VALIDATOR 24', 'A', 4203);
+INSERT INTO validators  (tp_id, val_desc, val_status, vl_id) VALUES (44, 'VALIDATOR 25', 'A', 2806);

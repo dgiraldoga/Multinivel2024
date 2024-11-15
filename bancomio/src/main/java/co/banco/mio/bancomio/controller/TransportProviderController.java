@@ -1,10 +1,7 @@
 package co.banco.mio.bancomio.controller;
 
-import co.banco.mio.bancomio.dto.LineDetailDTO;
 import co.banco.mio.bancomio.dto.TransportProviderDTO;
-import co.banco.mio.bancomio.mapper.LineDetailMapper;
 import co.banco.mio.bancomio.mapper.TransportProviderMapper;
-import co.banco.mio.bancomio.repository.LineDetailRepository;
 import co.banco.mio.bancomio.repository.TransportProviderRepository;
 import co.banco.mio.bancomio.service.TransportProviderService;
 import org.springframework.http.HttpStatus;
@@ -40,10 +37,10 @@ public class TransportProviderController {
         return TransportProviderMapper.domainToDTOList(transportProviderRepository.findAll());
     }
 
-    @DeleteMapping("/productos/{id}")
-    public ResponseEntity<String> eliminarTransportProvider(@PathVariable Long id) {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> eliminarTransportProvider(@PathVariable Integer id) throws Exception {
         try {
-            transportProviderService.eliminarProducto(id);
+            transportProviderService.eliminarTransportProvider(id);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Producto eliminado exitosamente.");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El producto con ID " + id + " no existe.");

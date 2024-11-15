@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/validator")
 public class ValidatorController {
 
     private final ValidatorRepository validatorRepository;

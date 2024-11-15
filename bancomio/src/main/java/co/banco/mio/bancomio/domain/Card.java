@@ -27,7 +27,7 @@ public class Card {
 	private LocalDateTime cardRegDate;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="app_id", referencedColumnName = "appid")
+	@JoinColumn(name="app_id")
 	private Application application;
 
 }

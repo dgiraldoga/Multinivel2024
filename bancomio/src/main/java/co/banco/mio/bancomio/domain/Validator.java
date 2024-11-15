@@ -39,7 +39,7 @@ public class Validator {
 	private LocalDateTime vlRegDate;
 	
 	@ManyToOne
-	@JoinColumn(name="tp_id", referencedColumnName = "tpId")
+	@JoinColumn(name="tp_id")
 	private TransportProvider transportProvider;
 
 }
