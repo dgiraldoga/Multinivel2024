@@ -1,11 +1,13 @@
 package co.banco.mio.bancomio.controller;
 
 import co.banco.mio.bancomio.dto.LineDetailDTO;
+import co.banco.mio.bancomio.dto.request.CreateLineDetailsRequest;
 import co.banco.mio.bancomio.mapper.LineDetailMapper;
 import co.banco.mio.bancomio.repository.LineDetailRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import co.banco.mio.bancomio.service.LineDetailService;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -14,9 +16,11 @@ import java.util.List;
 public class LineDetailController {
 
     private final LineDetailRepository lineDetailRepository;
+    private final LineDetailService lineDetailService;
 
-    public LineDetailController(LineDetailRepository lineDetailRepository) {
+    public LineDetailController(LineDetailRepository lineDetailRepository, LineDetailService lineDetailService) {
         this.lineDetailRepository = lineDetailRepository;
+        this.lineDetailService = lineDetailService;
     }
 
     @GetMapping(value = "/ping")
@@ -32,5 +36,10 @@ public class LineDetailController {
         return tiposDocumentosDTO;*/
 
         return LineDetailMapper.domainToDTOList(lineDetailRepository.findAll());
+    }
+
+    @PostMapping("/addlinedetail")
+    public ResponseEntity<LineDetailDTO> addLineDetail(@RequestBody @Valid CreateLineDetailsRequest request) throws Exception {
+        return ResponseEntity.ok(lineDetailService.create(request));
     }
 }

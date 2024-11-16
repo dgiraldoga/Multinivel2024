@@ -1,9 +1,11 @@
 package co.banco.mio.bancomio.controller;
 
 import co.banco.mio.bancomio.dto.UserDTO;
+import co.banco.mio.bancomio.dto.request.CreateUserRequest;
 import co.banco.mio.bancomio.mapper.UserMapper;
 import co.banco.mio.bancomio.repository.UserRepository;
 import co.banco.mio.bancomio.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +37,11 @@ public class UserController {
         return tiposDocumentosDTO;*/
 
         return UserMapper.domainToDTOList(userRepository.findAll());
+    }
+
+    @PostMapping
+    public ResponseEntity<UserDTO> createUser(@RequestBody @Valid CreateUserRequest createUserRequest) throws Exception {
+        return ResponseEntity.ok(userService.createUser(createUserRequest));
     }
 
     @PutMapping("/inactivate/{id}")

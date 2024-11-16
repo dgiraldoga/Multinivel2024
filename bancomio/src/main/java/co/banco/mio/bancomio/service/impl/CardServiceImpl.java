@@ -8,6 +8,8 @@ import co.banco.mio.bancomio.mapper.CardMapper;
 import co.banco.mio.bancomio.repository.ApplicationRepository;
 import co.banco.mio.bancomio.repository.CardRepository;
 import co.banco.mio.bancomio.service.CardService;
+import co.banco.mio.bancomio.utils.ApplicationMessage;
+import co.banco.mio.bancomio.utils.CardMessage;
 import co.banco.mio.bancomio.utils.Message;
 import co.banco.mio.bancomio.utils.State;
 import org.springframework.stereotype.Service;
@@ -31,19 +33,17 @@ public class CardServiceImpl implements CardService {
 
 
         if (request == null) {
-            throw new Exception(Message.OBJECT_NULL.getMessage());
+            throw new Exception(Message.OBJECT_NULL);
         }
 
         if (!String.valueOf(request.getAppId()).startsWith("19")) {
-            throw new Exception(Message.PROYECT_ID.getMessage());
-        } else if (String.valueOf(request.getAppId()).length() != 10) {
-            throw new Exception(String.format(Message.SIZE_ID.getMessage(), 10));
+            throw new Exception(CardMessage.PROYECT_ID);
         }
 
-        Application application = applicationRepository.findById(request.getAppId()).orElse(null);
+        Application application = applicationRepository.findById(request.getAppId()).orElseThrow(() -> new Exception(String.format(ApplicationMessage.NOT_FOUND_APP_ID, request.getAppId())));
 
-        if (application == null) {
-            throw new Exception(String.format(Message.DEPENDENT_ID.getMessage(), request.getAppId()));
+        if (cardRepository.findBySerialCardAndCardStatusAndApplication(request.getSerialCard(), State.ACTIVE.getValue(), application)){
+            throw new Exception(String.format(CardMessage.CARD_EXIST, request.getSerialCard()));
         }
 
         Card card = CardMapper.builder().build().createCardRequesttoEntity(request);
@@ -63,10 +63,10 @@ public class CardServiceImpl implements CardService {
 
         Card card = findById(cardId);
 
-        if (card.getCardStatus().equals(State.INACTIVE)) {
+        if (card.getCardStatus().equals(State.INACTIVE.getValue())) {
             throw new Exception(
                     String.format(
-                            Message.TARJETA_EN_ESTADO.getMessage(),
+                            CardMessage.STATUS_CARD,
                             card.getSerialCard(), State.INACTIVE.getValue()
                     )
             );
@@ -82,10 +82,10 @@ public class CardServiceImpl implements CardService {
     public CardDTO activateCard(Integer cardId) throws Exception {
         Card card = findById(cardId);
 
-        if (card.getCardStatus().equals(State.ACTIVE)) {
+        if (card.getCardStatus().equals(State.ACTIVE.getValue())) {
             throw new Exception(
                     String.format(
-                            Message.TARJETA_EN_ESTADO.getMessage(),
+                            CardMessage.STATUS_CARD,
                             card.getSerialCard(), State.ACTIVE.getValue()
                     )
             );
@@ -102,7 +102,7 @@ public class CardServiceImpl implements CardService {
         return cardRepository.findById(id)
                 .orElseThrow(
                         () -> new Exception(
-                                String.format(Message.NO_EXISTE_TARJETA_X_ID.getMessage(), id)
+                                String.format(CardMessage.NOT_FOUND_CARD_ID, id)
                         )
                 );
     }

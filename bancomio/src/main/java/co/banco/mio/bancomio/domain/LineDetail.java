@@ -23,7 +23,6 @@ public class LineDetail {
 	
 	@Id
 	@Column(name = "ld_id", nullable=false)
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer ldId;
 	
 	@Column(name="ld_desc")

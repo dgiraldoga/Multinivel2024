@@ -6,6 +6,7 @@ import co.banco.mio.bancomio.mapper.CardMapper;
 import co.banco.mio.bancomio.repository.CardRepository;
 import co.banco.mio.bancomio.service.CardService;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,9 +40,8 @@ public class CardController {
     }
 
     @PostMapping("/addproduct")
-    public ResponseEntity<CardDTO> addCard(@RequestBody CreateCardRequest request) throws Exception {
-        CardDTO card = cardService.createCard(request);
-        return ResponseEntity.ok(card);
+    public ResponseEntity<CardDTO> addCard(@RequestBody @Valid CreateCardRequest request) throws Exception {
+        return ResponseEntity.ok(cardService.createCard(request));
     }
 
     @PutMapping("/inactivate/{id}")

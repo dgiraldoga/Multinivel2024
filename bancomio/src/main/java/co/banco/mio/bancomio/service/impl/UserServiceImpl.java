@@ -8,6 +8,7 @@ import co.banco.mio.bancomio.dto.request.CreateUserRequest;
 import co.banco.mio.bancomio.service.UserService;
 import co.banco.mio.bancomio.utils.Message;
 import co.banco.mio.bancomio.utils.State;
+import co.banco.mio.bancomio.utils.UserMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,33 +26,14 @@ public class UserServiceImpl implements UserService {
 
         // Validar que el objeto no sea nulo
         if (createUserRequest == null) {
-            throw new Exception(Message.OBJECT_NULL.getMessage());
-        }
-
-        // Validar que el campo nombre no sea nulo ni sea vacío
-        if (createUserRequest.getName() == null
-                || createUserRequest.getName().isEmpty()) {
-            throw new Exception(String.format(Message.SIZE_DESCRIPTION.getMessage(), 100));
-        }
-
-        // Validar que el campo nombre no sea nulo ni sea vacío
-        if (createUserRequest.getLastName() == null
-                || createUserRequest.getLastName().isEmpty()) {
-            throw new Exception(String.format(Message.SIZE_DESCRIPTION.getMessage(), 100));
-        }
-
-        // Validar que el campo nombre no sea nulo ni sea vacío
-        if (createUserRequest.getCity() == null
-                || createUserRequest.getCity().isEmpty()) {
-            throw new Exception(String.format(Message.SIZE_DESCRIPTION.getMessage(), 100));
+            throw new Exception(Message.OBJECT_NULL);
         }
 
         User user = UserMapper.createUserRequestToDomain(createUserRequest);
 
         user = userRepository.save(user);
-        UserDTO userDTO = UserMapper.domainToDTO(user);
 
-        return userDTO;
+        return UserMapper.domainToDTO(user);
     }
 
     @Override
@@ -63,7 +45,7 @@ public class UserServiceImpl implements UserService {
         if (user.getStatus().equals(State.INACTIVE)) {
             throw new Exception(
                     String.format(
-                            Message.USUARIO_EN_ESTADO.getMessage(),
+                            UserMessage.STATUS_USER,
                             user.getUserId(), State.INACTIVE.getValue()
                     )
             );
@@ -82,7 +64,7 @@ public class UserServiceImpl implements UserService {
         if (user.getStatus().equals(State.ACTIVE)) {
             throw new Exception(
                     String.format(
-                            Message.USUARIO_EN_ESTADO.getMessage(),
+                            UserMessage.STATUS_USER,
                             user.getUserId(), State.ACTIVE.getValue()
                     )
             );
@@ -102,7 +84,7 @@ public class UserServiceImpl implements UserService {
         if (user!=null) {
             userRepository.deleteById(userId);
         } else {
-            throw new IllegalArgumentException("El usuario con ID " + userId + " no existe.");
+            throw new IllegalArgumentException(UserMessage.NOT_FOUND_USER);
         }
 
     }
@@ -113,7 +95,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id)
                 .orElseThrow(
                         () -> new Exception(
-                                String.format(Message.NO_EXISTE_USUARIO_X_ID.getMessage(), id)
+                                String.format(UserMessage.NOT_FOUND_USERID, id)
                         )
                 );
     }

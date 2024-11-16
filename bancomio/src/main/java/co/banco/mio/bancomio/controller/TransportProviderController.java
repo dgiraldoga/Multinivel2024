@@ -1,9 +1,11 @@
 package co.banco.mio.bancomio.controller;
 
 import co.banco.mio.bancomio.dto.TransportProviderDTO;
+import co.banco.mio.bancomio.dto.request.CreateTransportProviderRequest;
 import co.banco.mio.bancomio.mapper.TransportProviderMapper;
 import co.banco.mio.bancomio.repository.TransportProviderRepository;
 import co.banco.mio.bancomio.service.TransportProviderService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +38,12 @@ public class TransportProviderController {
 
         return TransportProviderMapper.domainToDTOList(transportProviderRepository.findAll());
     }
+
+    @PostMapping ("/addtransportprovider")
+    public ResponseEntity<TransportProviderDTO> addTransportProvider(@RequestBody @Valid CreateTransportProviderRequest createTransportProviderRequest) throws Exception {
+        return ResponseEntity.ok(transportProviderService.createTransportProvider(createTransportProviderRequest));
+    }
+
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> eliminarTransportProvider(@PathVariable Integer id) throws Exception {

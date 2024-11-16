@@ -4,6 +4,7 @@ import co.banco.mio.bancomio.dto.request.CreateApplicationRequest;
 import co.banco.mio.bancomio.mapper.ApplicationMapper;
 import co.banco.mio.bancomio.repository.ApplicationRepository;
 import co.banco.mio.bancomio.service.ApplicationService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,9 +34,8 @@ public class ApplicationController {
     }
 
     @PostMapping("/addapplication")
-    public ResponseEntity<ApplicationDTO> addApplication(@RequestBody CreateApplicationRequest createApplicationRequest) throws Exception {
-        ApplicationDTO applicationDTO = applicationService.createApplication(createApplicationRequest);
-        return ResponseEntity.ok(applicationDTO);
+    public ResponseEntity<ApplicationDTO> addApplication(@RequestBody @Valid CreateApplicationRequest createApplicationRequest) throws Exception {
+        return ResponseEntity.ok(applicationService.createApplication(createApplicationRequest));
     }
 
 }

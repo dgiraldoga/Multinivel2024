@@ -5,6 +5,7 @@ import co.banco.mio.bancomio.dto.request.CreateCardUsageRequest;
 import co.banco.mio.bancomio.mapper.CardUsageMapper;
 import co.banco.mio.bancomio.repository.CardUsageRepository;
 import co.banco.mio.bancomio.service.CardUsageService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,9 +34,8 @@ public class CardUsageController {
     }
 
     @PostMapping("/addCardUsage")
-    public ResponseEntity <CardUsageDTO> addCardUsage(@RequestBody CreateCardUsageRequest request) throws Exception {
-        CardUsageDTO cardUsageDTO = cardUsageService.addCardUsage(request);
-        return ResponseEntity.ok(cardUsageDTO);
+    public ResponseEntity <CardUsageDTO> addCardUsage(@RequestBody @Valid CreateCardUsageRequest request) throws Exception {
+        return ResponseEntity.ok(cardUsageService.addCardUsage(request));
     }
 
 

@@ -17,7 +17,6 @@ public class Card {
 	
 	@Id
 	@Column(name = "serial_card", nullable=false)
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer serialCard;
 	
 	@Column(name="card_status", length = 1, nullable = false)

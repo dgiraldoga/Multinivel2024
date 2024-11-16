@@ -20,7 +20,6 @@ public class TransportProvider {
 
     @Id
     @Column(name = "tp_id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer tpId;
 
     @Column(name = "tp_desc")

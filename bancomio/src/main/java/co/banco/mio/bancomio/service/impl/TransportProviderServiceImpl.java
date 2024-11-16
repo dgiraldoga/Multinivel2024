@@ -8,6 +8,7 @@ import co.banco.mio.bancomio.mapper.TransportProviderMapper;
 import co.banco.mio.bancomio.repository.TransportProviderRepository;
 import co.banco.mio.bancomio.service.TransportProviderService;
 import co.banco.mio.bancomio.utils.Message;
+import co.banco.mio.bancomio.utils.TransportProviderMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,11 +23,7 @@ public class TransportProviderServiceImpl implements TransportProviderService {
     @Override
     public TransportProviderDTO createTransportProvider(CreateTransportProviderRequest createTransportProviderRequest) throws Exception {
         if (createTransportProviderRequest == null) {
-            throw new Exception(Message.OBJECT_NULL.getMessage());
-        }
-
-        if (createTransportProviderRequest.getTpDescription().isEmpty() || createTransportProviderRequest.getTpDescription().isBlank() || createTransportProviderRequest.getTpDescription().length() > 255) {
-            throw new Exception(String.format(Message.SIZE_DESCRIPTION.getMessage(), 100));
+            throw new Exception(Message.OBJECT_NULL);
         }
 
         TransportProvider transportProvider = TransportProviderMapper.createTransportProvidertoEntity(createTransportProviderRequest);
@@ -41,7 +38,7 @@ public class TransportProviderServiceImpl implements TransportProviderService {
     public void eliminarTransportProvider(Integer transportPID) throws Exception {
 
         TransportProvider transportProvider = transportProviderRepository.findById(transportPID)
-                .orElseThrow(() -> new IllegalArgumentException("El transpport provider con ID " + transportPID + " no existe."));
+                .orElseThrow(() -> new IllegalArgumentException(String.format(TransportProviderMessage.NOT_FOUND_TRANSPORTPROVIDER, transportPID)));
 
         if (transportProvider.getValidators() != null && !transportProvider.getValidators().isEmpty()) {
             // Opción: lanzar una excepción si tiene pedidos asociados

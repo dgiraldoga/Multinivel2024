@@ -21,7 +21,6 @@ public class Application {
 	
 	@Id
 	@Column(name = "app_id", nullable=false)
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer appId;
 	
 	@Column(name="app_desc")

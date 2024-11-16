@@ -39,7 +39,7 @@ public class ApplicationMapper {
 	public Application createApplicationRequesttoEntity(CreateApplicationRequest createApplicationRequest) {
 		return Application.builder()
 				.appId(createApplicationRequest.getAppId())
-				.appDsc(createApplicationRequest.getAppDescription())
+				.appDsc(createApplicationRequest.getAppDescription().toUpperCase())
 				.appStatus(State.ACTIVE.getValue())
 				.build();
 	}

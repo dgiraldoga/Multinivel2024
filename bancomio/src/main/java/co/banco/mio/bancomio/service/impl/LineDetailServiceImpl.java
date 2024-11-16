@@ -7,8 +7,9 @@ import co.banco.mio.bancomio.mapper.LineDetailMapper;
 import co.banco.mio.bancomio.repository.LineDetailRepository;
 import co.banco.mio.bancomio.service.LineDetailService;
 import co.banco.mio.bancomio.utils.Message;
+import org.springframework.stereotype.Service;
 
-
+@Service
 public class LineDetailServiceImpl implements LineDetailService {
 
     private final LineDetailRepository lineDetailRepository;
@@ -20,11 +21,7 @@ public class LineDetailServiceImpl implements LineDetailService {
     @Override
     public LineDetailDTO create(CreateLineDetailsRequest request) throws Exception {
         if (request == null) {
-            throw new Exception(Message.OBJECT_NULL.getMessage());
-        }
-
-        if(request.getLd_desc().isEmpty() || request.getLd_desc().isBlank() || request.getLd_desc().length()>255) {
-            throw new Exception(String.format(Message.SIZE_DESCRIPTION.getMessage(), 100));
+            throw new Exception(Message.OBJECT_NULL);
         }
 
         LineDetail lineDetail = LineDetailMapper.CreateLineDetailRequesttoEntity(request);

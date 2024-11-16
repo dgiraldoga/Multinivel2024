@@ -6,6 +6,7 @@ import co.banco.mio.bancomio.dto.request.CreateValidadorRequest;
 import co.banco.mio.bancomio.mapper.ValidatorMapper;
 import co.banco.mio.bancomio.repository.ValidatorRepository;
 import co.banco.mio.bancomio.service.ValidatorService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,8 +36,7 @@ public class ValidatorController {
     }
 
     @PostMapping("/addvalidator")
-    public ResponseEntity<ValidatorDTO> addValidator(@RequestBody CreateValidadorRequest request) throws Exception {
-        ValidatorDTO validatorDTO = validatorService.createValidator(request);
-        return ResponseEntity.ok(validatorDTO);
+    public ResponseEntity<ValidatorDTO> addValidator(@RequestBody @Valid CreateValidadorRequest request) throws Exception {
+        return ResponseEntity.ok(validatorService.createValidator(request));
     }
 }

@@ -14,12 +14,11 @@ import lombok.*;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="users")
+@Table(name="users", schema = "mio")
 public class User {
 	
 	@Id
 	@Column(name = "user_id", nullable=false)
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer userId;
 	
 	@Column(name="name_user")

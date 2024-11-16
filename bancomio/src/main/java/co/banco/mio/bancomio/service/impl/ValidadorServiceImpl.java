@@ -9,6 +9,7 @@ import co.banco.mio.bancomio.repository.TransportProviderRepository;
 import co.banco.mio.bancomio.repository.ValidatorRepository;
 import co.banco.mio.bancomio.service.ValidatorService;
 import co.banco.mio.bancomio.utils.Message;
+import co.banco.mio.bancomio.utils.TransportProviderMessage;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,21 +27,14 @@ public class ValidadorServiceImpl implements ValidatorService {
     public ValidatorDTO createValidator(CreateValidadorRequest request) throws Exception {
 
         if (request == null) {
-            throw new Exception(Message.OBJECT_NULL.getMessage());
+            throw new Exception(Message.OBJECT_NULL);
         }
 
-        if (String.valueOf(request.getVlId()).length() != 4) {
-            throw new Exception(String.format(Message.SIZE_ID.getMessage(), 4));
-        }
-
-        if (request.getValDescripcion().isBlank() || request.getValDescripcion().isEmpty() || request.getValDescripcion().length() >= 100) {
-            throw new Exception(String.format(Message.SIZE_DESCRIPTION.getMessage(), 100));
-        }
 
         TransportProvider transportProvider = transportProviderRepository.findById(request.getVlId()).orElse(null);
 
         if (transportProvider == null) {
-            throw new Exception(String.format(Message.DEPENDENT_ID.getMessage(), request.getVlId()));
+            throw new Exception(String.format(TransportProviderMessage.NOT_FOUND_TRANSPORTPROVIDER, request.getVlId()));
         }
 
         Validator validator = ValidatorMapper.createValidatorRequesttoEntity(request);

@@ -26,7 +26,6 @@ public class Validator {
 	
 	@Id
 	@Column(name = "vl_id", nullable=false)
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer vlId;
 	
 	@Column(name="vl_desc")
