@@ -13,4 +13,7 @@ public class ApplicationMessage {
     public final static String SIZE_APP_DESC = "La descripcion de la aplicacion debe estar entre 1 a 100 caracteres";
 
     public final static String APP_EXISTS = "La aplicacion %d o con descripcion %s ya existe en la base de datos";
+
+    public final static String APP_NOT_EXISTS = "El id %d de aplicacion no existe";
+
 }

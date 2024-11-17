@@ -1,8 +1,11 @@
 package co.banco.mio.bancomio.mapper;
 
 import co.banco.mio.bancomio.domain.Application;
+import co.banco.mio.bancomio.domain.Card;
 import co.banco.mio.bancomio.dto.ApplicationDTO;
 import co.banco.mio.bancomio.dto.request.CreateApplicationRequest;
+import co.banco.mio.bancomio.dto.response.ApplicationResponseCard;
+import co.banco.mio.bancomio.dto.response.CardResponseApplication;
 import co.banco.mio.bancomio.utils.State;
 import lombok.Builder;
 
@@ -44,4 +47,16 @@ public class ApplicationMapper {
 				.build();
 	}
 
+	public ApplicationResponseCard toCardResponseApplication(Application application, List<CardResponseApplication> cardResponseApplications) {
+		return ApplicationResponseCard.builder()
+				.applicationId(application.getAppId())
+				.applicationDescription(application.getAppDsc())
+				.cards(cardResponseApplications)
+				.build();
+	}
+
+
+
+
 }
+

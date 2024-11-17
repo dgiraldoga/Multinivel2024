@@ -42,7 +42,7 @@ public class CardServiceImpl implements CardService {
 
         Application application = applicationRepository.findById(request.getAppId()).orElseThrow(() -> new Exception(String.format(ApplicationMessage.NOT_FOUND_APP_ID, request.getAppId())));
 
-        if (cardRepository.findBySerialCardAndCardStatusAndApplication(request.getSerialCard(), State.ACTIVE.getValue(), application)){
+        if (cardRepository.existsBySerialCardAndCardStatusAndApplication(request.getSerialCard(), State.ACTIVE.getValue(), application)){
             throw new Exception(String.format(CardMessage.CARD_EXIST, request.getSerialCard()));
         }
 

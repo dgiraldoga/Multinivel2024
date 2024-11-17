@@ -1,6 +1,8 @@
 package co.banco.mio.bancomio.controller;
 import co.banco.mio.bancomio.dto.ApplicationDTO;
 import co.banco.mio.bancomio.dto.request.CreateApplicationRequest;
+import co.banco.mio.bancomio.dto.response.ApplicationResponseCard;
+import co.banco.mio.bancomio.dto.response.CardResponseApplication;
 import co.banco.mio.bancomio.mapper.ApplicationMapper;
 import co.banco.mio.bancomio.repository.ApplicationRepository;
 import co.banco.mio.bancomio.service.ApplicationService;
@@ -36,6 +38,11 @@ public class ApplicationController {
     @PostMapping("/addapplication")
     public ResponseEntity<ApplicationDTO> addApplication(@RequestBody @Valid CreateApplicationRequest createApplicationRequest) throws Exception {
         return ResponseEntity.ok(applicationService.createApplication(createApplicationRequest));
+    }
+
+    @GetMapping ("/appwithcard/{appId}")
+    public ResponseEntity<ApplicationResponseCard> getApplicationCard(@PathVariable Integer appId) throws Exception {
+        return ResponseEntity.ok(applicationService.getApplicationCard(appId));
     }
 
 }

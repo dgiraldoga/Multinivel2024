@@ -3,11 +3,13 @@ package co.banco.mio.bancomio.mapper;
 import co.banco.mio.bancomio.domain.Card;
 import co.banco.mio.bancomio.dto.CardDTO;
 import co.banco.mio.bancomio.dto.request.CreateCardRequest;
+import co.banco.mio.bancomio.dto.response.CardResponseApplication;
 import co.banco.mio.bancomio.utils.State;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Builder
 public class CardMapper {
@@ -44,5 +46,17 @@ public class CardMapper {
                 .cardRegDate(LocalDateTime.now())
                 .cardStatus(State.ACTIVE.getValue())
                 .build();
+    }
+
+
+    public CardResponseApplication cardResponseApplication(Card card) {
+        return CardResponseApplication.builder()
+                .serialCardNumber(card.getSerialCard())
+                .cardStatus(card.getCardStatus())
+                .build();
+    }
+
+    public List<CardResponseApplication> cardResponseApplicationList(List<Card> cards) {
+        return cards.stream().map(this::cardResponseApplication).toList();
     }
 }
