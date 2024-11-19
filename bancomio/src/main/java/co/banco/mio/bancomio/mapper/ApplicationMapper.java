@@ -4,6 +4,7 @@ import co.banco.mio.bancomio.domain.Application;
 import co.banco.mio.bancomio.domain.Card;
 import co.banco.mio.bancomio.dto.ApplicationDTO;
 import co.banco.mio.bancomio.dto.request.CreateApplicationRequest;
+import co.banco.mio.bancomio.dto.request.UpdateApplicationRequest;
 import co.banco.mio.bancomio.dto.response.ApplicationResponseCard;
 import co.banco.mio.bancomio.dto.response.CardResponseApplication;
 import co.banco.mio.bancomio.utils.State;
@@ -53,6 +54,12 @@ public class ApplicationMapper {
 				.applicationDescription(application.getAppDsc())
 				.cards(cardResponseApplications)
 				.build();
+	}
+
+	public Application updateApplicationRequesttoEntity(Application application, UpdateApplicationRequest updateApplicationRequest) {
+		application.setAppStatus(State.ACTIVE.getValue());
+		application.setAppDsc(updateApplicationRequest.getAppDescription().toUpperCase());
+		return application;
 	}
 
 

@@ -1,15 +1,12 @@
 package co.banco.mio.bancomio.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @Builder
@@ -28,5 +25,8 @@ public class Application {
 	
 	@Column(name="app_status", length = 1, nullable=false)
 	private Character appStatus;
+
+	@OneToMany (mappedBy = "application")
+	private List<Card> cardList;
 
 }

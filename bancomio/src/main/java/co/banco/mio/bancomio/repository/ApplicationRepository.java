@@ -13,4 +13,6 @@ public interface ApplicationRepository extends JpaRepository<Application, Intege
     Boolean existsByAppIdOrAppDscAndAppStatus(Integer appId, String AppDesc, Character appStatus);
 
     List <Application> findByAppStatus(Character status);
+
+    Boolean existsByAppDscAndAppStatus(String appDsc, Character appStatus);
 }
