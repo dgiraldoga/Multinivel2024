@@ -38,7 +38,7 @@ public class LineDetailMapper {
     public static LineDetail CreateLineDetailRequesttoEntity(CreateLineDetailsRequest createLineDetailsRequest){
         return LineDetail.builder()
                 .ldDsc(createLineDetailsRequest.getLd_desc())
-                .ldStatus(State.ACTIVE.getValue())
+                .ldStatus(State.ACTIVE.getValue().charAt(0))
                 .ldRegDate(LocalDateTime.now())
                 .build();
     }

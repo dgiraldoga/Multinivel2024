@@ -1,8 +1,8 @@
 package co.banco.mio.bancomio.controller;
 import co.banco.mio.bancomio.dto.ApplicationDTO;
 import co.banco.mio.bancomio.dto.request.CreateApplicationRequest;
+import co.banco.mio.bancomio.dto.request.UpdateApplicationRequest;
 import co.banco.mio.bancomio.dto.response.ApplicationResponseCard;
-import co.banco.mio.bancomio.dto.response.CardResponseApplication;
 import co.banco.mio.bancomio.mapper.ApplicationMapper;
 import co.banco.mio.bancomio.repository.ApplicationRepository;
 import co.banco.mio.bancomio.service.ApplicationService;
@@ -45,4 +45,33 @@ public class ApplicationController {
         return ResponseEntity.ok(applicationService.getApplicationCard(appId));
     }
 
+    @GetMapping ("/applicationid/{id}")
+    public ApplicationDTO getApplication(@PathVariable Integer id) throws Exception {
+        return applicationService.getApplication(id);
+    }
+
+    @GetMapping ("/statusapplications/{status}")
+    public List<ApplicationDTO> getApplicationsByStatus(@PathVariable String status) throws Exception {
+        return applicationService.getApplicationStatus(status);
+    }
+
+    @PutMapping ("/updateapp/{id}")
+    public ApplicationDTO updateApplication(@PathVariable Integer id, @RequestBody @Valid UpdateApplicationRequest updateApplicationRequest) throws Exception {
+        return applicationService.updateApplication(id, updateApplicationRequest);
+    }
+
+    @PutMapping ("/activateapp/{id}")
+    public ApplicationDTO activateApplication(@PathVariable Integer id) throws Exception {
+        return applicationService.activateApplication(id);
+    }
+
+    @PutMapping ("/deactivateapp/{id}")
+    public ApplicationDTO deactivateApplication(@PathVariable Integer id) throws Exception {
+        return applicationService.deactivateApplication(id);
+    }
+
+    @DeleteMapping ("/appdelete/{id}")
+    public void deleteApplication(@PathVariable Integer id) throws Exception {
+        applicationService.deleteApplication(id);
+    }
 }

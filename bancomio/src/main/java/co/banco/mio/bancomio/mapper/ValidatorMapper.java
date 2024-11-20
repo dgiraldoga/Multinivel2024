@@ -40,7 +40,7 @@ public class ValidatorMapper {
         return Validator.builder()
                 .vlId(createValidadorRequest.getVlId())
                 .vlDesc(createValidadorRequest.getValDescripcion())
-                .vlStatus(State.ACTIVE.getValue())
+                .vlStatus(State.ACTIVE.getValue().charAt(0))
                 .vlRegDate(LocalDateTime.now())
                 .build();
     }

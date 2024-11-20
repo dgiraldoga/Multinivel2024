@@ -5,12 +5,12 @@ import lombok.Getter;
 @Getter
 public enum State {
 
-    ACTIVE('A'),
-    INACTIVE('I');
+    ACTIVE("A"),
+    DEACTIVE("I");
 
-    private final Character value;
+    private final String value;
 
-    State(char value) {
+    State(String value) {
         this.value = value;
     }
 

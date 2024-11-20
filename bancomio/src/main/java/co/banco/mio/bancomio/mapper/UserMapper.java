@@ -45,7 +45,7 @@ public class UserMapper {
                 .name(userRequest.getName())
                 .lastName(userRequest.getLastName())
                 .city(userRequest.getCity())
-                .status(State.ACTIVE.getValue())
+                .status(State.ACTIVE.getValue().charAt(0))
                 .userRegDate(LocalDateTime.now())
                 .build();
     }

@@ -17,5 +17,5 @@ public class UpdateApplicationRequest {
     @NotBlank( message = ApplicationMessage.APP_NAME_NOT_NULL)
     @Size(min = 1, max = 100, message = ApplicationMessage.SIZE_APP_DESC)
     private String appDescription;
-    private Character status;
+    private String status;
 }

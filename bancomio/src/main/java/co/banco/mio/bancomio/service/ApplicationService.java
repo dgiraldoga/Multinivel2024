@@ -15,12 +15,14 @@ public interface ApplicationService {
 
     ApplicationDTO getApplication(int appId) throws Exception;
 
-    List<ApplicationDTO> getApplicationStatus (char status) throws Exception;
+    List<ApplicationDTO> getApplicationStatus (String status) throws Exception;
 
     ApplicationDTO updateApplication(int appId, UpdateApplicationRequest request) throws Exception;
 
     ApplicationDTO activateApplication(int appId) throws Exception;
 
     ApplicationDTO deactivateApplication(int appId) throws Exception;
+
+    void deleteApplication(int appId) throws Exception;
 
 }

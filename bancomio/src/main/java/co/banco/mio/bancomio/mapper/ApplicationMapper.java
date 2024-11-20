@@ -44,7 +44,7 @@ public class ApplicationMapper {
 		return Application.builder()
 				.appId(createApplicationRequest.getAppId())
 				.appDsc(createApplicationRequest.getAppDescription().toUpperCase())
-				.appStatus(State.ACTIVE.getValue())
+				.appStatus(State.ACTIVE.getValue().charAt(0))
 				.build();
 	}
 
@@ -57,7 +57,7 @@ public class ApplicationMapper {
 	}
 
 	public Application updateApplicationRequesttoEntity(Application application, UpdateApplicationRequest updateApplicationRequest) {
-		application.setAppStatus(State.ACTIVE.getValue());
+		application.setAppStatus(State.ACTIVE.getValue().charAt(0));
 		application.setAppDsc(updateApplicationRequest.getAppDescription().toUpperCase());
 		return application;
 	}
