@@ -12,7 +12,7 @@ public class Message {
 
     public final static String TYPE_USAGE = "El %d no es un tipo de uso valido [ 0 - Integracion, 1 - Uso Pago ]";
 
-    public final static String STATUS_INCORRECT = "Estado incorrecto las opcciones son [A] Activo - [I] Inactivo";
+    public final static String STATUS_INCORRECT = "Estado %s incorrecto las opcciones son [A] Activo - [I] Inactivo";
 
 
 }

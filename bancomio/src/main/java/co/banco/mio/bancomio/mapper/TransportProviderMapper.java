@@ -38,7 +38,7 @@ public class TransportProviderMapper {
     public static TransportProvider createTransportProvidertoEntity(CreateTransportProviderRequest createTransportProviders) {
         return TransportProvider.builder()
                 .tpDesc(createTransportProviders.getTpDescription())
-                .tpStatus(State.ACTIVE.getValue())
+                .tpStatus(State.ACTIVE.getValue().charAt(0))
                 .tpRepDate(LocalDateTime.now())
                 .build();
     }

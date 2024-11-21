@@ -42,16 +42,16 @@ public class UserServiceImpl implements UserService {
 
         User user = findById(userID);
 
-        if (user.getStatus().equals(State.INACTIVE)) {
+        if (user.getStatus().equals(State.DEACTIVE)) {
             throw new Exception(
                     String.format(
                             UserMessage.STATUS_USER,
-                            user.getUserId(), State.INACTIVE.getValue()
+                            user.getUserId(), State.DEACTIVE.getValue()
                     )
             );
         }
 
-        user.setStatus(State.INACTIVE.getValue());
+        user.setStatus(State.DEACTIVE.getValue().charAt(0));
         user = userRepository.save(user);
         return UserMapper.domainToDTO(user);
     }
@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
             );
         }
 
-        user.setStatus(State.ACTIVE.getValue());
+        user.setStatus(State.ACTIVE.getValue().charAt(0));
         user = userRepository.save(user);
         return UserMapper.domainToDTO(user);
     }

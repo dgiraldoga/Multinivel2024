@@ -44,7 +44,7 @@ public class CardMapper {
         return Card.builder()
                 .serialCard(createCardRequest.getSerialCard())
                 .cardRegDate(LocalDateTime.now())
-                .cardStatus(State.ACTIVE.getValue())
+                .cardStatus(State.ACTIVE.getValue().charAt(0))
                 .build();
     }
 

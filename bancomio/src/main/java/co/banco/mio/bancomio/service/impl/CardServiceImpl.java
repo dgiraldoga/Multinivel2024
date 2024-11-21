@@ -42,7 +42,7 @@ public class CardServiceImpl implements CardService {
 
         Application application = applicationRepository.findById(request.getAppId()).orElseThrow(() -> new Exception(String.format(ApplicationMessage.NOT_FOUND_APP_ID, request.getAppId())));
 
-        if (cardRepository.existsBySerialCardAndCardStatusAndApplication(request.getSerialCard(), State.ACTIVE.getValue(), application)){
+        if (cardRepository.existsBySerialCardAndCardStatusAndApplication(request.getSerialCard(), State.ACTIVE.getValue().charAt(0), application)){
             throw new Exception(String.format(CardMessage.CARD_EXIST, request.getSerialCard()));
         }
 
@@ -63,16 +63,16 @@ public class CardServiceImpl implements CardService {
 
         Card card = findById(cardId);
 
-        if (card.getCardStatus().equals(State.INACTIVE.getValue())) {
+        if (card.getCardStatus().equals(State.DEACTIVE.getValue())) {
             throw new Exception(
                     String.format(
                             CardMessage.STATUS_CARD,
-                            card.getSerialCard(), State.INACTIVE.getValue()
+                            card.getSerialCard(), State.DEACTIVE.getValue()
                     )
             );
         }
 
-        card.setCardStatus(State.INACTIVE.getValue());
+        card.setCardStatus(State.DEACTIVE.getValue().charAt(0));
         card = cardRepository.save(card);
         return CardMapper.builder().build().toDTO(card);
     }
@@ -91,7 +91,7 @@ public class CardServiceImpl implements CardService {
             );
         }
 
-        card.setCardStatus(State.ACTIVE.getValue());
+        card.setCardStatus(State.ACTIVE.getValue().charAt(0));
         card = cardRepository.save(card);
         return CardMapper.builder().build().toDTO(card);
     }
