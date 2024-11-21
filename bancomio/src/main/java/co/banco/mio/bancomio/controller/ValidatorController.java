@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/validator")
+@CrossOrigin("*")
 public class ValidatorController {
 
     private final ValidatorRepository validatorRepository;

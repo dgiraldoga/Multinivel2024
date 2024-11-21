@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/line-detail")
+@CrossOrigin("*")
 public class LineDetailController {
 
     private final LineDetailRepository lineDetailRepository;

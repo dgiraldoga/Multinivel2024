@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/application")
+@CrossOrigin("*")
 public class ApplicationController {
 
     private final ApplicationRepository applicationRepository;

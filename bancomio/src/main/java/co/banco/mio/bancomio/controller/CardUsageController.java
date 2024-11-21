@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/card-usage")
+@CrossOrigin("*")
 public class CardUsageController {
 
     private final CardUsageRepository cardUsageRepository;

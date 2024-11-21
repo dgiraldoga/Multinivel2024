@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/transport-provider")
+@CrossOrigin("*")
 public class TransportProviderController {
 
     private final TransportProviderRepository transportProviderRepository;
