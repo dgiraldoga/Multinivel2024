@@ -12,16 +12,22 @@ import co.banco.mio.bancomio.utils.State;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Builder
 public class CardMapper {
 
     public CardDTO toDTO(Card card) {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        LocalDateTime cardRegDate = LocalDateTime.parse(card.getCardRegDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")), formatter);
+
         return CardDTO.builder()
                 .serialCard(card.getSerialCard())
                 .cardStatus(card.getCardStatus())
                 .applicationId(card.getApplication() == null ? 700: card.getApplication().getAppId())
+                .cardRedate(card.getCardRegDate() == null ? LocalDateTime.now() : cardRegDate)
                 .build();
     }
 
