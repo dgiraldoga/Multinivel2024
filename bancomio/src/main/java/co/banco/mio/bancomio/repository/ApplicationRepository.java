@@ -1,5 +1,6 @@
 package co.banco.mio.bancomio.repository;
 
+import co.banco.mio.bancomio.domain.Card;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,4 +16,6 @@ public interface ApplicationRepository extends JpaRepository<Application, Intege
     List <Application> findByAppStatus(char status);
 
     Boolean existsByAppDscAndAppStatus(String appDsc, Character appStatus);
+
+    void deleteApplicationByCardList  (List<Card> cardList);
 }

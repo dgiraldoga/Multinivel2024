@@ -12,4 +12,7 @@ public interface CardRepository extends JpaRepository<Card, Integer> {
     Boolean existsBySerialCardAndCardStatusAndApplication(int serialCard, char cardStatus, Application application);
 
     List <Card> findCardByApplication (Application application);
+
+    void deleteCardByApplication (Application application);
+
 }

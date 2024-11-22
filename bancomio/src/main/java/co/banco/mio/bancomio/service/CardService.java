@@ -10,4 +10,7 @@ public interface CardService {
     CardDTO inactivateCard(Integer cardId) throws Exception;
 
     CardDTO activateCard(Integer cardId) throws Exception;
+
+    void deleteCard(Integer cardId) throws Exception;
+
 }

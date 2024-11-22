@@ -124,8 +124,10 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Transactional (propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void deleteApplication(int appId) throws Exception {
         Application application = this.findApplicationById(appId);
+        cardRepository.deleteCardByApplication(application);
         applicationRepository.delete(application);
     }
+
 
     private Application findApplicationById(int appId) throws Exception {
         return applicationRepository.findById(appId).orElseThrow(() -> new Exception(String.format(ApplicationMessage.NOT_FOUND_APP_ID, appId)));

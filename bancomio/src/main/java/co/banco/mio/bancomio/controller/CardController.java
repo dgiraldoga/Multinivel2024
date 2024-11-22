@@ -56,4 +56,9 @@ public class CardController {
         CardDTO cardDTO = cardService.activateCard(id);
         return ResponseEntity.ok(cardDTO);
     }
+
+    @DeleteMapping("/deletecard/{id}")
+    public void deleteCard(@PathVariable Integer id) throws Exception{
+        cardService.deleteCard(id);
+    }
 }

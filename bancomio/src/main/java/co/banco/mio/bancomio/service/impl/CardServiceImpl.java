@@ -58,7 +58,7 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public CardDTO inactivateCard(Integer cardId) throws Exception {
 
         Card card = findById(cardId);
@@ -78,7 +78,7 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public CardDTO activateCard(Integer cardId) throws Exception {
         Card card = findById(cardId);
 
@@ -95,6 +95,14 @@ public class CardServiceImpl implements CardService {
         card = cardRepository.save(card);
         return CardMapper.builder().build().toDTO(card);
     }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public void deleteCard(Integer cardId) throws Exception {
+        Card card = findById(cardId);
+        cardRepository.delete(card);
+    }
+
 
     @Transactional(readOnly = true)
     protected Card findById(Integer id) throws Exception {

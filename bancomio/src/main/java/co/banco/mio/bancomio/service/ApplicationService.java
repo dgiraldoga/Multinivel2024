@@ -25,4 +25,6 @@ public interface ApplicationService {
 
     void deleteApplication(int appId) throws Exception;
 
+
+
 }
