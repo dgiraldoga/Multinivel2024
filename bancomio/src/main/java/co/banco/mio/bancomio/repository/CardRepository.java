@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface CardRepository extends JpaRepository<Card, Integer> {
-    Boolean existsBySerialCardAndCardStatusAndApplication(int serialCard, char cardStatus, Application application);
+    Boolean existsByApplicationAndSerialCardAndCardStatus(Application application, Integer serialCard, Character cardStatus);
 
     List <Card> findCardByApplication (Application application);
 

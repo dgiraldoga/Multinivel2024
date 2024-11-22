@@ -1,15 +1,18 @@
 package co.banco.mio.bancomio.mapper;
 
+import co.banco.mio.bancomio.domain.Application;
 import co.banco.mio.bancomio.domain.Card;
 import co.banco.mio.bancomio.dto.CardDTO;
 import co.banco.mio.bancomio.dto.request.CreateCardRequest;
 import co.banco.mio.bancomio.dto.response.CardResponseApplication;
+import co.banco.mio.bancomio.repository.ApplicationRepository;
+import co.banco.mio.bancomio.service.impl.ApplicationServiceImpl;
+import co.banco.mio.bancomio.utils.CardMessage;
 import co.banco.mio.bancomio.utils.State;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Builder
 public class CardMapper {
@@ -40,11 +43,11 @@ public class CardMapper {
         return cardDTOs.stream().map(this::toEntity).toList();
     }
 
-    public Card createCardRequesttoEntity (CreateCardRequest createCardRequest){
+    public static Card createCardRequesttoEntity (CreateCardRequest createCardRequest) {
         return Card.builder()
                 .serialCard(createCardRequest.getSerialCard())
-                .cardRegDate(LocalDateTime.now())
                 .cardStatus(State.ACTIVE.getValue().charAt(0))
+                .cardRegDate(LocalDateTime.now())
                 .build();
     }
 

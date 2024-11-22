@@ -40,7 +40,7 @@ public class CardController {
         return CardMapper.builder().build().toDTOList(cardRepository.findAll());
     }
 
-    @PostMapping("/addproduct")
+    @PostMapping("/addcard")
     public ResponseEntity<CardDTO> addCard(@RequestBody @Valid CreateCardRequest request) throws Exception {
         return ResponseEntity.ok(cardService.createCard(request));
     }

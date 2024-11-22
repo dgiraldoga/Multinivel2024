@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 
 @Service
 public class CardServiceImpl implements CardService {
@@ -29,31 +31,18 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public CardDTO createCard(CreateCardRequest request) throws Exception {
 
+        Application application = applicationRepository.findById(request.getAppId()).orElseThrow(() -> new Exception(String.format(ApplicationMessage.APP_NOT_EXISTS, request.getAppId())));
 
-        if (request == null) {
-            throw new Exception(Message.OBJECT_NULL);
-        }
-
-        if (!String.valueOf(request.getAppId()).startsWith("19")) {
-            throw new Exception(CardMessage.PROYECT_ID);
-        }
-
-        Application application = applicationRepository.findById(request.getAppId()).orElseThrow(() -> new Exception(String.format(ApplicationMessage.NOT_FOUND_APP_ID, request.getAppId())));
-
-        if (cardRepository.existsBySerialCardAndCardStatusAndApplication(request.getSerialCard(), State.ACTIVE.getValue().charAt(0), application)){
+        if (cardRepository.existsByApplicationAndSerialCardAndCardStatus(application, request.getSerialCard(), State.ACTIVE.getValue().charAt(0))){
             throw new Exception(String.format(CardMessage.CARD_EXIST, request.getSerialCard()));
         }
 
-        Card card = CardMapper.builder().build().createCardRequesttoEntity(request);
-
+        Card card = CardMapper.createCardRequesttoEntity(request);
         card.setApplication(application);
-
-        card = cardRepository.save(card);
-
-        return CardMapper.builder().build().toDTO(card);
-
+        return CardMapper.builder().build().toDTO(cardRepository.save(card));
 
     }
 
